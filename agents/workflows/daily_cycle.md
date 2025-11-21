@@ -1,0 +1,44 @@
+# 🔄 Workflow: The Daily Agent Cycle
+
+## Overview
+To maximize efficiency, we run AI agents in a structured daily cycle that aligns with the team's standups and work blocks.
+
+## 📅 The Schedule
+
+### 08:00 - 09:00: The "Night Shift" Review
+*   **Who**: Tech Lead & QA
+*   **Activity**: Review the results of overnight automated jobs (CI/CD, Test Runs).
+*   **Agent Task**:
+    *   `@TestMigrator`: "Analyze the overnight test failures and group them by error type."
+
+### 09:15 - 12:00: The "Batch Processing" Block
+*   **Who**: All Devs
+*   **Activity**: Assign large batch tasks to agents while doing deep work.
+*   **Agent Tasks**:
+    *   **Tech Lead** → `@ArchitectureReviewer`: "Check for circular deps in `src/app`."
+    *   **Dev A1** → `@BuildFixer`: "Fix these 50 TypeScript errors."
+    *   **Dev A2** → `@CodeModernizer`: "Convert this module's templates to control flow."
+    *   **Dev A3** → `@StyleMigrator`: "Migrate `user-profile` component to MDC styles."
+    *   **Dev B1** → `@LogicRefactorer`: "Convert `AuthService` to use `inject()`."
+    *   **Dev B2** → `@DependencyAuditor`: "Check compatibility for `ngx-charts`."
+    *   **Dev B3** → `@InfraPerfOptimizer`: "Optimize bundle budgets to 2mb."
+    *   **QA** → `@TestMigrator`: "Migrate `login.spec.ts` to Vitest."
+
+### 13:00 - 16:00: The "Integration" Block
+*   **Who**: All Devs
+*   **Activity**: Review agent work, merge to feature branches, and handle complex logic manually.
+*   **Agent Tasks**:
+    *   `@CodeReviewer`: "Review my changes in `src/app/auth` before I open a PR."
+    *   `@BuildFixer`: "Fix any new errors introduced by the merges."
+    *   `@DependencyAuditor`: "Check if the new library version conflicts with anything."
+
+### 16:00 - 17:00: The "Cleanup" Block
+*   **Who**: QA & Tech Lead
+*   **Activity**: Prepare for the overnight run.
+*   **Agent Tasks**:
+    *   `@TestMigrator`: "Run the full suite and flag flaky tests."
+
+## 🧠 Context7 Sync
+**Critical Step**: At the end of each block, if you corrected an agent, you **MUST** update Context7.
+
+*   *Command*: "Context7, store this pattern: When fixing `MatDialog` tests, always provide `MatDialogRef` in the providers array."
