@@ -45,4 +45,24 @@ export class AuthService {
     const user = this.currentUserSubject.value;
     return user ? user.roles.includes(role) : false;
   }
+
+  get currentUserValue(): User | null {
+    return this.currentUserSubject.value;
+  }
+
+  isAuthenticated(): boolean {
+    return this.currentUserSubject.value !== null;
+  }
+
+  refreshToken(): Observable<User> {
+    // Mock token refresh
+    return of({
+      id: this.currentUserSubject.value?.id || '1',
+      username: this.currentUserSubject.value?.username || 'admin',
+      roles: this.currentUserSubject.value?.roles || ['ADMIN']
+    }).pipe(
+      delay(500),
+      tap(user => this.currentUserSubject.next(user))
+    );
+  }
 }

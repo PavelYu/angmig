@@ -1,0 +1,22 @@
+<mat-accordion [multi]="multi" [displayMode]="displayMode">
+  <mat-expansion-panel 
+    *ngFor="let panel of panels"
+    [expanded]="panel.expanded"
+    [disabled]="panel.disabled"
+    (opened)="panelOpened(panel)"
+    (closed)="panelClosed(panel)">
+    
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon *ngIf="panel.icon" class="panel-icon">{{ panel.icon }}</mat-icon>
+        {{ panel.title }}
+      </mat-panel-title>
+      <mat-panel-description *ngIf="panel.description">
+        {{ panel.description }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="panel-content" [innerHTML]="panel.content"></div>
+  </mat-expansion-panel>
+</mat-accordion>
+

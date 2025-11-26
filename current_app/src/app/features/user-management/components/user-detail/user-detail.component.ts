@@ -4,66 +4,60 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
-  template: `
-    <div class="user-detail-container">
-      <h2>User Profile</h2>
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username">
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email">
-          <mat-error *ngIf="userForm.get('email')?.hasError('email')">Invalid email</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Role</mat-label>
-          <mat-select formControlName="role">
-            <mat-option value="ADMIN">Admin</mat-option>
-            <mat-option value="USER">User</mat-option>
-            <mat-option value="GUEST">Guest</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div class="actions">
-          <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Save</button>
-          <button mat-button type="button">Cancel</button>
-        </div>
-      </form>
-    </div>
-  `,
-  styles: [`
-    .user-detail-container { padding: 20px; max-width: 600px; }
-    form { display: flex; flex-direction: column; gap: 16px; }
-  `]
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder, 
+    private route: ActivatedRoute,
+    private location: Location
+  ) {
     this.userForm = this.fb.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      role: ['USER', Validators.required]
+      firstName: [''],
+      lastName: [''],
+      role: ['USER', Validators.required],
+      status: ['ACTIVE'],
+      phone: [''],
+      department: [''],
+      bio: ['']
     });
   }
 
   ngOnInit(): void {
-    // Mock load data
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.userForm.patchValue({
-        username: 'loaded_user',
-        email: 'user@example.com',
-        role: 'ADMIN'
-      });
+      this.loadUser(id);
     }
   }
 
-  onSubmit() {
-    console.log(this.userForm.value);
+  private loadUser(id: string): void {
+    // Mock data - in real app, load from service
+    this.userForm.patchValue({
+      username: 'john.doe',
+      email: 'john.doe@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      role: 'ADMIN',
+      status: 'ACTIVE',
+      phone: '+1 (555) 123-4567',
+      department: 'Engineering',
+      bio: 'Senior software engineer with 10+ years of experience.'
+    });
+  }
+
+  onSubmit(): void {
+    if (this.userForm.valid) {
+      console.log('Saving user:', this.userForm.value);
+      // In real app: this.userService.updateUser(this.userForm.value);
+    }
+  }
+
+  cancel(): void {
+    this.location.back();
   }
 }

@@ -1,0 +1,17 @@
+<div class="advanced-map-container">
+  <div class="map-header">
+    <h3>{{ title }}</h3>
+    <div class="map-controls">
+      <mat-form-field appearance="outline" class="projection-selector">
+        <mat-label>Projection</mat-label>
+        <mat-select [value]="projection" (selectionChange)="changeProjection($event.value)">
+          <mat-option value="mercator">Mercator</mat-option>
+          <mat-option value="lambert">Lambert Conformal</mat-option>
+          <mat-option value="albers">Albers Equal Area</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div #mapContainer class="map-chart"></div>
+</div>
+

@@ -1,0 +1,67 @@
+.stepper-form-container {
+  width: 100%;
+
+  .step-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .step-icon {
+      margin-right: 4px;
+    }
+
+    .step-title {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .step-description {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+  }
+
+  .step-form {
+    padding: 24px 0;
+    min-height: 200px;
+
+    .default-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+  .step-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #e0e0e0;
+
+    button {
+      mat-icon {
+        margin: 0 4px;
+      }
+    }
+  }
+}
+
+.dark-theme {
+  .stepper-form-container {
+    .step-label .step-description {
+      color: #b0b0b0;
+    }
+
+    .step-actions {
+      border-top-color: #616161;
+    }
+  }
+}
+

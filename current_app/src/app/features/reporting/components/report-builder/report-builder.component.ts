@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-report-builder',
@@ -46,16 +46,34 @@ export class ReportBuilderComponent {
   reportForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
+    const today = new Date();
+    const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+
     this.reportForm = this.fb.group({
-      type: ['financial'],
-      start: [new Date()],
-      end: [new Date()],
+      name: [''],
+      type: ['financial', Validators.required],
+      start: [lastMonth],
+      end: [today],
+      format: ['pdf'],
       includeCharts: [true],
-      exportPdf: [false]
+      includeTables: [true],
+      includeSummary: [false],
+      groupByCategory: [false]
     });
   }
 
-  generate() {
-    console.log('Generating report...', this.reportForm.value);
+  generate(): void {
+    if (this.reportForm.valid) {
+      console.log('Generating report...', this.reportForm.value);
+      // In real app: this.reportService.generateReport(this.reportForm.value);
+    }
+  }
+
+  preview(): void {
+    console.log('Preview report...', this.reportForm.value);
+  }
+
+  saveTemplate(): void {
+    console.log('Saving template...', this.reportForm.value);
   }
 }

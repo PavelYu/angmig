@@ -1,42 +1,27 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-grid-toolbar',
-  template: `
-    <div class="grid-toolbar">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>Search</mat-label>
-        <input matInput (keyup)="onSearch($event)" placeholder="Filter...">
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-
-      <div class="actions">
-        <button mat-stroked-button (click)="exportCsv.emit()">
-          <mat-icon>download</mat-icon> Export CSV
-        </button>
-        <button mat-stroked-button (click)="toggleColumns.emit()">
-          <mat-icon>view_column</mat-icon> Columns
-        </button>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .grid-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-    }
-    .search-field { font-size: 14px; width: 300px; }
-    .actions button { margin-left: 8px; }
-  `]
+  templateUrl: './grid-toolbar.component.html',
+  styleUrls: ['./grid-toolbar.component.scss']
 })
 export class GridToolbarComponent {
+  @Input() rowCount: number | null = null;
   @Output() search = new EventEmitter<string>();
   @Output() exportCsv = new EventEmitter<void>();
+  @Output() exportExcel = new EventEmitter<void>();
   @Output() toggleColumns = new EventEmitter<void>();
+  @Output() refresh = new EventEmitter<void>();
 
-  onSearch(event: any) {
-    this.search.emit(event.target.value);
+  searchValue = '';
+
+  onSearch(event: any): void {
+    this.searchValue = event.target.value;
+    this.search.emit(this.searchValue);
+  }
+
+  clearSearch(): void {
+    this.searchValue = '';
+    this.search.emit('');
   }
 }

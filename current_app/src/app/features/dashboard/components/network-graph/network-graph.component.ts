@@ -3,44 +3,58 @@ import { Edge, Node } from '@swimlane/ngx-graph';
 
 @Component({
   selector: 'app-network-graph',
-  template: `
-    <ngx-graph
-      class="chart-container"
-      [view]="[800, 400]"
-      [links]="links"
-      [nodes]="nodes"
-      [curve]="curve"
-      [autoZoom]="true">
-      
-      <ng-template #nodeTemplate let-node>
-        <svg:g class="node">
-          <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.color" />
-          <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
-        </svg:g>
-      </ng-template>
-
-      <ng-template #linkTemplate let-link>
-        <svg:g class="edge">
-          <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
-        </svg:g>
-      </ng-template>
-    </ngx-graph>
-  `,
-  styles: [`
-    .chart-container { height: 400px; width: 100%; }
-  `]
+  templateUrl: './network-graph.component.html',
+  styleUrls: ['./network-graph.component.scss']
 })
 export class NetworkGraphComponent {
+  view: [number, number] = [800, 400];
+  autoZoom = true;
+  showLegend = true;
+  selectedNode: string | null = null;
+
   nodes: Node[] = [
-    { id: 'start', label: 'Start', data: { color: '#5AA454' } },
-    { id: 'mid', label: 'Process', data: { color: '#A10A28' } },
-    { id: 'end', label: 'End', data: { color: '#C7B42C' } }
+    { id: 'user', label: 'User', data: { color: '#1976d2' } },
+    { id: 'order', label: 'Order', data: { color: '#388e3c' } },
+    { id: 'product', label: 'Product', data: { color: '#f57c00' } },
+    { id: 'payment', label: 'Payment', data: { color: '#7b1fa2' } },
+    { id: 'shipping', label: 'Shipping', data: { color: '#c2185b' } }
   ];
 
   links: Edge[] = [
-    { id: 'a', source: 'start', target: 'mid', label: 'Next' },
-    { id: 'b', source: 'mid', target: 'end', label: 'Finish' }
+    { id: '1', source: 'user', target: 'order', label: 'creates', data: { color: '#1976d2' } },
+    { id: '2', source: 'order', target: 'product', label: 'contains', data: { color: '#388e3c' } },
+    { id: '3', source: 'order', target: 'payment', label: 'requires', data: { color: '#7b1fa2' } },
+    { id: '4', source: 'order', target: 'shipping', label: 'ships via', data: { color: '#c2185b' } }
   ];
 
   curve: any = undefined; // Default curve
+
+  zoomIn(): void {
+    // Implement zoom in logic
+    console.log('Zoom in');
+  }
+
+  zoomOut(): void {
+    // Implement zoom out logic
+    console.log('Zoom out');
+  }
+
+  resetZoom(): void {
+    // Implement reset zoom logic
+    console.log('Reset zoom');
+  }
+
+  toggleLayout(): void {
+    // Implement layout toggle logic
+    console.log('Toggle layout');
+  }
+
+  onNodeClick(node: Node): void {
+    this.selectedNode = node.id;
+    console.log('Node clicked:', node);
+  }
+
+  onLinkClick(link: Edge): void {
+    console.log('Link clicked:', link);
+  }
 }

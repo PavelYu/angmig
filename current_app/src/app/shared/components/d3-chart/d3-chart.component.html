@@ -1,0 +1,7 @@
+<div class="d3-chart-container">
+  <div class="chart-header" *ngIf="xLabel || yLabel">
+    <h4 *ngIf="xLabel">{{ xLabel }}</h4>
+  </div>
+  <div #chartContainer class="chart-svg"></div>
+</div>
+

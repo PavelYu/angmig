@@ -1,31 +1,70 @@
-<div class="dashboard-grid">
-    <div class="kpi-section">
-        <app-kpi-card *ngFor="let kpi of kpiData" [title]="kpi.title" [value]="kpi.value" [trend]="kpi.trend"
-            [chartData]="kpi.chartData">
-        </app-kpi-card>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <div class="dashboard-actions">
+            <button mat-stroked-button (click)="saveLayout()">
+                <mat-icon>save</mat-icon>
+                Save Layout
+            </button>
+            <button mat-stroked-button>
+                <mat-icon>refresh</mat-icon>
+                Refresh
+            </button>
+        </div>
     </div>
 
-    <div class="charts-section">
-        <mat-card class="chart-card">
-            <mat-card-header>
-                <mat-card-title>Revenue Overview</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <app-revenue-chart></app-revenue-chart>
-            </mat-card-content>
-        </mat-card>
+    <div class="dashboard-grid" cdkDropList (cdkDropListDropped)="drop($event)">
+        <!-- KPI Cards -->
+        <div class="dashboard-widget kpi-widget" 
+             *ngFor="let kpi of kpiData; let i = index"
+             cdkDrag
+             [cdkDragData]="getWidgetById('' + (i + 1))">
+            <div class="widget-header" cdkDragHandle>
+                <mat-icon class="drag-handle">drag_indicator</mat-icon>
+            </div>
+            <app-kpi-card 
+                [title]="kpi.title" 
+                [value]="kpi.value" 
+                [trend]="kpi.trend"
+                [changePercent]="kpi.changePercent"
+                [icon]="kpi.icon"
+                [chartData]="kpi.chartData">
+            </app-kpi-card>
+        </div>
 
-        <mat-card class="chart-card">
-            <mat-card-header>
-                <mat-card-title>Geographic Distribution</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <app-regional-map></app-regional-map>
-            </mat-card-content>
-        </mat-card>
-    </div>
+        <!-- Revenue Chart Widget -->
+        <div class="dashboard-widget chart-widget" cdkDrag [cdkDragData]="getWidgetById('5')">
+            <div class="widget-header" cdkDragHandle>
+                <mat-icon class="drag-handle">drag_indicator</mat-icon>
+                <span class="widget-title">Revenue Overview</span>
+            </div>
+            <mat-card class="widget-card">
+                <mat-card-content>
+                    <app-revenue-chart></app-revenue-chart>
+                </mat-card-content>
+            </mat-card>
+        </div>
 
-    <div class="feed-section">
-        <app-activity-feed></app-activity-feed>
+        <!-- Regional Map Widget -->
+        <div class="dashboard-widget map-widget" cdkDrag [cdkDragData]="getWidgetById('6')">
+            <div class="widget-header" cdkDragHandle>
+                <mat-icon class="drag-handle">drag_indicator</mat-icon>
+                <span class="widget-title">Geographic Distribution</span>
+            </div>
+            <mat-card class="widget-card">
+                <mat-card-content>
+                    <app-regional-map></app-regional-map>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- Activity Feed Widget -->
+        <div class="dashboard-widget feed-widget" cdkDrag [cdkDragData]="getWidgetById('7')">
+            <div class="widget-header" cdkDragHandle>
+                <mat-icon class="drag-handle">drag_indicator</mat-icon>
+                <span class="widget-title">Activity Feed</span>
+            </div>
+            <app-activity-feed></app-activity-feed>
+        </div>
     </div>
 </div>

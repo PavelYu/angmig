@@ -2,19 +2,23 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-icon',
-  template: `
-    <svg class="icon" [class]="size">
-      <use [attr.href]="'assets/icons.svg#' + name"></use>
-    </svg>
-  `,
-  styles: [`
-    .icon { fill: currentColor; }
-    .small { width: 16px; height: 16px; }
-    .medium { width: 24px; height: 24px; }
-    .large { width: 32px; height: 32px; }
-  `]
+  templateUrl: './icon.component.html',
+  styleUrls: ['./icon.component.scss']
 })
 export class IconComponent {
   @Input() name: string = '';
-  @Input() size: 'small' | 'medium' | 'large' = 'medium';
+  @Input() size: 'small' | 'medium' | 'large' | 'xlarge' = 'medium';
+  @Input() color?: string;
+  @Input() fontSize?: number;
+  @Input() useSvg = false; // Use SVG sprite vs Material icon
+
+  get sizePx(): number {
+    const sizes = {
+      small: 16,
+      medium: 24,
+      large: 32,
+      xlarge: 48
+    };
+    return sizes[this.size] || 24;
+  }
 }

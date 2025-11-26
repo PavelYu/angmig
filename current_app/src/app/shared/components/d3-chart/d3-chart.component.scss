@@ -1,0 +1,74 @@
+.d3-chart-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .chart-header {
+    margin-bottom: 16px;
+
+    h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: #212121;
+    }
+  }
+
+  .chart-svg {
+    flex: 1;
+    width: 100%;
+
+    ::ng-deep {
+      .grid line {
+        stroke: #e0e0e0;
+      }
+
+      .grid path {
+        stroke-width: 0;
+      }
+
+      text {
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+        fill: #666;
+      }
+
+      .bar {
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .dot {
+        cursor: pointer;
+        transition: r 0.2s;
+
+        &:hover {
+          r: 6;
+        }
+      }
+    }
+  }
+}
+
+.dark-theme {
+  .d3-chart-container {
+    .chart-header h4 {
+      color: #e0e0e0;
+    }
+
+    .chart-svg ::ng-deep {
+      .grid line {
+        stroke: #424242;
+      }
+
+      text {
+        fill: #b0b0b0;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,92 @@
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  .status-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+
+  &.active,
+  &.enabled,
+  &.success,
+  &.completed {
+    background-color: #e6f4ea;
+    color: #1e8e3e;
+  }
+
+  &.pending,
+  &.processing,
+  &.warning {
+    background-color: #fef7e0;
+    color: #b06000;
+  }
+
+  &.inactive,
+  &.disabled,
+  &.cancelled {
+    background-color: #f1f3f4;
+    color: #5f6368;
+  }
+
+  &.error,
+  &.failed,
+  &.rejected {
+    background-color: #fce8e6;
+    color: #c5221f;
+  }
+
+  &.info,
+  &.draft {
+    background-color: #e8f0fe;
+    color: #1967d2;
+  }
+}
+
+.dark-theme {
+  .status-chip {
+    &.active,
+    &.enabled,
+    &.success,
+    &.completed {
+      background-color: #1e3a2e;
+      color: #81c995;
+    }
+
+    &.pending,
+    &.processing,
+    &.warning {
+      background-color: #3e2723;
+      color: #ffb74d;
+    }
+
+    &.inactive,
+    &.disabled,
+    &.cancelled {
+      background-color: #424242;
+      color: #b0b0b0;
+    }
+
+    &.error,
+    &.failed,
+    &.rejected {
+      background-color: #3e2723;
+      color: #ef5350;
+    }
+
+    &.info,
+    &.draft {
+      background-color: #1e3a5f;
+      color: #64b5f6;
+    }
+  }
+}
+

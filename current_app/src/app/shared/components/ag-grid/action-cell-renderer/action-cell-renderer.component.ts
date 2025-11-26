@@ -4,21 +4,8 @@ import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
   selector: 'app-action-cell-renderer',
-  template: `
-    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onEdit()">
-        <mat-icon>edit</mat-icon>
-        <span>Edit</span>
-      </button>
-      <button mat-menu-item (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
-        <span>Delete</span>
-      </button>
-    </mat-menu>
-  `
+  templateUrl: './action-cell-renderer.component.html',
+  styleUrls: ['./action-cell-renderer.component.scss']
 })
 export class ActionCellRendererComponent implements ICellRendererAngularComp {
   params: any;
@@ -31,11 +18,39 @@ export class ActionCellRendererComponent implements ICellRendererAngularComp {
     return false;
   }
 
-  onEdit() {
-    console.log('Edit clicked', this.params.data);
+  hasAction(actionName: string): boolean {
+    return this.params[actionName] !== undefined && this.params[actionName] !== null;
   }
 
-  onDelete() {
-    console.log('Delete clicked', this.params.data);
+  onEdit(): void {
+    if (this.params.onEdit) {
+      this.params.onEdit(this.params.data);
+    } else {
+      console.log('Edit clicked', this.params.data);
+    }
+  }
+
+  onView(): void {
+    if (this.params.onView) {
+      this.params.onView(this.params.data);
+    } else {
+      console.log('View clicked', this.params.data);
+    }
+  }
+
+  onDuplicate(): void {
+    if (this.params.onDuplicate) {
+      this.params.onDuplicate(this.params.data);
+    } else {
+      console.log('Duplicate clicked', this.params.data);
+    }
+  }
+
+  onDelete(): void {
+    if (this.params.onDelete) {
+      this.params.onDelete(this.params.data);
+    } else {
+      console.log('Delete clicked', this.params.data);
+    }
   }
 }

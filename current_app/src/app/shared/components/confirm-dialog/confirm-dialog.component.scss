@@ -1,0 +1,40 @@
+.dialog-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 300px;
+  max-width: 500px;
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-top: 4px;
+
+    &.warning-icon {
+      color: #ff9800;
+    }
+
+    &.error-icon {
+      color: #f44336;
+    }
+
+    &.info-icon {
+      color: #2196f3;
+    }
+  }
+
+  .message {
+    margin: 0;
+    line-height: 1.5;
+    color: #212121;
+  }
+}
+
+::ng-deep .dark-theme {
+  .dialog-content .message {
+    color: #e0e0e0;
+  }
+}
+

@@ -3,28 +3,105 @@
         <mat-icon>menu</mat-icon>
     </button>
 
-    <span>Enterprise App</span>
+    <span class="app-title">Enterprise App</span>
 
     <span class="spacer"></span>
 
-    <div class="search-bar">
-        <mat-icon>search</mat-icon>
-        <input type="text" placeholder="Global Search...">
+    <!-- Global Search -->
+    <div class="search-container">
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput 
+                   [formControl]="searchControl" 
+                   placeholder="Global Search..."
+                   (focus)="showSearchResults = true"
+                   (blur)="setTimeout(() => showSearchResults = false, 200)">
+        </mat-form-field>
+        
+        <div class="search-results" *ngIf="showSearchResults && (searchResults$ | async)?.length">
+            <div class="search-result-item" 
+                 *ngFor="let result of searchResults$ | async"
+                 (click)="onSearchResultClick(result)">
+                <mat-icon>{{ result.type === 'user' ? 'person' : result.type === 'report' ? 'description' : 'receipt' }}</mat-icon>
+                <span>{{ result.label }}</span>
+            </div>
+        </div>
     </div>
 
-    <button mat-icon-button (click)="toggleTheme()">
+    <!-- Notifications Bell -->
+    <button mat-icon-button 
+            [matMenuTriggerFor]="notificationsMenu"
+            class="notifications-btn">
+        <mat-icon>notifications</mat-icon>
+        <span class="badge" *ngIf="(unreadCount$ | async) as count" [class.has-unread]="count > 0">
+            {{ count > 9 ? '9+' : count }}
+        </span>
+    </button>
+
+    <mat-menu #notificationsMenu="matMenu" class="notifications-menu">
+        <div class="notifications-header">
+            <span>Notifications</span>
+            <button mat-icon-button (click)="clearAllNotifications()" *ngIf="(notifications$ | async)?.length">
+                <mat-icon>clear_all</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="notifications-list">
+            <div class="notification-item" 
+                 *ngFor="let notification of notifications$ | async"
+                 [class.unread]="!notification.read"
+                 (click)="markNotificationAsRead(notification)">
+                <mat-icon [class]="'notification-icon-' + notification.type">
+                    {{ notification.type === 'error' ? 'error' : notification.type === 'warning' ? 'warning' : 'info' }}
+                </mat-icon>
+                <div class="notification-content">
+                    <div class="notification-message">{{ notification.message }}</div>
+                    <div class="notification-time">{{ notification.timestamp | date:'short' }}</div>
+                </div>
+            </div>
+            <div class="no-notifications" *ngIf="!(notifications$ | async)?.length">
+                No notifications
+            </div>
+        </div>
+    </mat-menu>
+
+    <!-- Theme Toggle -->
+    <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle theme">
         <mat-icon>{{ (isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="currentUser$ | async as user">
+    <!-- User Menu -->
+    <button mat-icon-button 
+            [matMenuTriggerFor]="userMenu" 
+            *ngIf="currentUser$ | async as user"
+            class="user-menu-btn">
         <mat-icon>account_circle</mat-icon>
         <span class="username">{{ user.username }}</span>
     </button>
 
     <mat-menu #userMenu="matMenu">
-        <button mat-menu-item>Profile</button>
-        <button mat-menu-item>Settings</button>
+        <div class="user-menu-header" *ngIf="currentUser$ | async as user">
+            <div class="user-info">
+                <mat-icon>account_circle</mat-icon>
+                <div>
+                    <div class="user-name">{{ user.username }}</div>
+                    <div class="user-roles">{{ user.roles.join(', ') }}</div>
+                </div>
+            </div>
+        </div>
         <mat-divider></mat-divider>
-        <button mat-menu-item (click)="logout()">Logout</button>
+        <button mat-menu-item (click)="navigateToProfile()">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+        </button>
+        <button mat-menu-item (click)="navigateToSettings()">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+        </button>
     </mat-menu>
 </mat-toolbar>

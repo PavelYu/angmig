@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-page-not-found',
-  template: `
-    <div class="not-found">
-      <h1>404</h1>
-      <p>Page not found</p>
-      <button mat-raised-button color="primary" routerLink="/">Go Home</button>
-    </div>
-  `,
-  styles: [`
-    .not-found { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    h1 { font-size: 72px; margin: 0; color: #ccc; }
-  `]
+  templateUrl: './page-not-found.component.html',
+  styleUrls: ['./page-not-found.component.scss']
 })
-export class PageNotFoundComponent { }
+export class PageNotFoundComponent {
+  constructor(private location: Location) {}
+
+  goBack(): void {
+    this.location.back();
+  }
+}

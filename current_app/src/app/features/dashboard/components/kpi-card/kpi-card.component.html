@@ -1,1 +1,27 @@
-<p>kpi-card works!</p>
+<mat-card class="kpi-card" [style.border-left-color]="getTrendColor(1)">
+  <mat-card-content>
+    <div class="kpi-header">
+      <div class="kpi-title-section">
+        <mat-icon *ngIf="icon" class="kpi-icon">{{ icon }}</mat-icon>
+        <span class="kpi-title">{{ title }}</span>
+      </div>
+      <mat-icon [ngClass]="'trend-' + trend" class="trend-icon">{{ getTrendIcon() }}</mat-icon>
+    </div>
+    
+    <div class="kpi-value-section">
+      <div class="kpi-value">{{ value }}</div>
+      <div class="kpi-change" *ngIf="changePercent !== undefined" [ngClass]="'change-' + trend">
+        {{ getChangeDisplay() }}
+      </div>
+    </div>
+
+    <div class="sparkline-container" #sparklineContainer>
+      <highcharts-chart 
+        *ngIf="chartData && chartData.length > 0"
+        [Highcharts]="Highcharts"
+        [options]="sparklineOptions"
+        style="width: 100%; height: 60px; display: block;">
+      </highcharts-chart>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,27 @@
-<p>page-not-found works!</p>
+<div class="not-found-container">
+  <div class="not-found-content">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-message">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+    <div class="error-actions">
+      <button mat-raised-button color="primary" routerLink="/" class="home-button">
+        <mat-icon>home</mat-icon>
+        Go Home
+      </button>
+      <button mat-stroked-button (click)="goBack()" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+        Go Back
+      </button>
+    </div>
+    <div class="helpful-links">
+      <p>You might be looking for:</p>
+      <ul>
+        <li><a routerLink="/dashboard">Dashboard</a></li>
+        <li><a routerLink="/users">User Management</a></li>
+        <li><a routerLink="/reports">Reports</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

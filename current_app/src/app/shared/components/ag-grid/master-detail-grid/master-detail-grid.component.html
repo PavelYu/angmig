@@ -1,0 +1,17 @@
+<div class="master-detail-grid-container">
+  <div class="grid-header">
+    <h3>Master-Detail Grid</h3>
+    <p>Click the arrow icon to expand/collapse detail rows</p>
+  </div>
+  
+  <ag-grid-angular 
+    #agGrid
+    style="width: 100%; height: 500px;" 
+    class="ag-theme-alpine" 
+    [rowData]="rowData"
+    [columnDefs]="masterColumnDefs" 
+    [gridOptions]="gridOptions"
+    (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>
+

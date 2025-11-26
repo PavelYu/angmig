@@ -1,0 +1,19 @@
+<div class="timezone-selector-container">
+  <mat-form-field appearance="outline" class="timezone-field">
+    <mat-label>{{ placeholder }}</mat-label>
+    <mat-select [formControl]="timezoneControl" [disabled]="disabled">
+      <mat-option *ngFor="let tz of timezones" [value]="tz.value">
+        <div class="timezone-option">
+          <span class="timezone-label">{{ tz.label }}</span>
+          <span class="timezone-offset">(UTC{{ tz.offset }})</span>
+        </div>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="current-time" *ngIf="showCurrentTime && currentTime">
+    <mat-icon>schedule</mat-icon>
+    <span>Current time: {{ currentTime }}</span>
+  </div>
+</div>
+

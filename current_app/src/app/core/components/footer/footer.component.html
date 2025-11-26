@@ -1,1 +1,72 @@
-<p>footer works!</p>
+<footer class="app-footer" [class.dark-theme]="isDark$ | async">
+  <div class="footer-container">
+    <!-- Main Footer Content -->
+    <div class="footer-main">
+      <!-- Company Info Section -->
+      <div class="footer-section company-section">
+        <div class="company-logo">
+          <h3>{{ companyInfo.name }}</h3>
+          <p class="tagline">{{ companyInfo.tagline }}</p>
+        </div>
+        <div class="company-contact">
+          <div class="contact-item">
+            <mat-icon>email</mat-icon>
+            <a [href]="'mailto:' + companyInfo.email">{{ companyInfo.email }}</a>
+          </div>
+          <div class="contact-item">
+            <mat-icon>phone</mat-icon>
+            <a [href]="'tel:' + companyInfo.phone">{{ companyInfo.phone }}</a>
+          </div>
+        </div>
+        <div class="social-links">
+          <a 
+            *ngFor="let social of socialLinks"
+            [href]="social.url"
+            [attr.aria-label]="social.label"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link">
+            <mat-icon [svgIcon]="social.icon" *ngIf="false"></mat-icon>
+            <mat-icon>{{ social.icon }}</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Links Sections -->
+      <div class="footer-links" *ngFor="let section of footerSections">
+        <div class="footer-section">
+          <h4 class="section-title">{{ section.title }}</h4>
+          <ul class="link-list">
+            <li *ngFor="let link of section.links">
+              <a 
+                [routerLink]="link.route"
+                [href]="link.url"
+                [target]="link.external ? '_blank' : null"
+                [rel]="link.external ? 'noopener noreferrer' : null"
+                (click)="link.external ? navigateToLink(link) : null">
+                {{ link.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <span class="copyright">
+          &copy; {{ currentYear }} {{ companyInfo.name }}. All rights reserved.
+        </span>
+        <span class="version">v{{ appVersion }}</span>
+      </div>
+      <div class="footer-bottom-right">
+        <span class="build-info">
+          Build: {{ getBuildInfo() }}
+        </span>
+        <span class="separator">|</span>
+        <app-language-selector></app-language-selector>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,25 @@
+.chip-input-container {
+  width: 100%;
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .chip-input-field {
+    width: 100%;
+
+    ::ng-deep .mat-form-field-infix {
+      padding: 8px 0;
+    }
+
+    mat-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 40px;
+      padding: 4px 0;
+    }
+  }
+}
+

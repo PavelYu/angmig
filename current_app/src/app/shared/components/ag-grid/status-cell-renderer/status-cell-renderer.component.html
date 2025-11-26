@@ -1,1 +1,4 @@
-<p>status-cell-renderer works!</p>
+<span class="status-chip" [ngClass]="getStatusClass()">
+  <mat-icon class="status-icon" *ngIf="showIcon">{{ getStatusIcon() }}</mat-icon>
+  {{ params.value }}
+</span>

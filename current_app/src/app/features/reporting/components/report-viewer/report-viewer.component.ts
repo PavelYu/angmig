@@ -1,23 +1,36 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-report-viewer',
-  template: `
-    <div class="report-viewer">
-      <div *ngIf="!reportContent" class="placeholder">
-        <mat-icon>description</mat-icon>
-        <p>No report generated yet.</p>
-      </div>
-      <div *ngIf="reportContent" [innerHTML]="reportContent"></div>
-    </div>
-  `,
-  styles: [`
-    .report-viewer { min-height: 400px; border: 1px dashed #ccc; display: flex; justify-content: center; align-items: center; margin-top: 20px; }
-    .placeholder { text-align: center; color: #999; }
-    .placeholder mat-icon { font-size: 48px; width: 48px; height: 48px; }
-  `]
+  templateUrl: './report-viewer.component.html',
+  styleUrls: ['./report-viewer.component.scss']
 })
-export class ReportViewerComponent {
+export class ReportViewerComponent implements OnInit {
   @Input() reportContent: SafeHtml | null = null;
+  @Input() reportTitle?: string;
+  @Input() reportFormat?: 'html' | 'pdf' | 'excel' | 'csv';
+  @Input() generatedDate?: Date;
+
+  constructor(private sanitizer: DomSanitizer) {}
+
+  ngOnInit(): void {
+    if (!this.generatedDate) {
+      this.generatedDate = new Date();
+    }
+  }
+
+  download(): void {
+    console.log('Downloading report...');
+    // In real app: this.reportService.downloadReport(this.reportContent);
+  }
+
+  print(): void {
+    window.print();
+  }
+
+  share(): void {
+    console.log('Sharing report...');
+    // In real app: implement share functionality
+  }
 }

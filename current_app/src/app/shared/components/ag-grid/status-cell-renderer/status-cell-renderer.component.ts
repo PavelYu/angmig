@@ -4,32 +4,47 @@ import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
   selector: 'app-status-cell-renderer',
-  template: `
-    <span class="status-chip" [ngClass]="params.value?.toLowerCase()">
-      {{ params.value }}
-    </span>
-  `,
-  styles: [`
-    .status-chip {
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .active { background-color: #e6f4ea; color: #1e8e3e; }
-    .pending { background-color: #fef7e0; color: #b06000; }
-    .inactive { background-color: #f1f3f4; color: #5f6368; }
-  `]
+  templateUrl: './status-cell-renderer.component.html',
+  styleUrls: ['./status-cell-renderer.component.scss']
 })
 export class StatusCellRendererComponent implements ICellRendererAngularComp {
   params: any;
+  @Input() showIcon = true;
 
   agInit(params: ICellRendererParams): void {
     this.params = params;
+    this.showIcon = params.showIcon !== false;
   }
 
   refresh(params: ICellRendererParams): boolean {
     this.params = params;
     return true;
+  }
+
+  getStatusClass(): string {
+    const status = (this.params.value || '').toLowerCase();
+    return status;
+  }
+
+  getStatusIcon(): string {
+    const status = (this.params.value || '').toLowerCase();
+    const iconMap: { [key: string]: string } = {
+      active: 'check_circle',
+      enabled: 'check_circle',
+      success: 'check_circle',
+      completed: 'check_circle',
+      pending: 'schedule',
+      processing: 'sync',
+      warning: 'warning',
+      inactive: 'cancel',
+      disabled: 'block',
+      cancelled: 'cancel',
+      error: 'error',
+      failed: 'error',
+      rejected: 'cancel',
+      info: 'info',
+      draft: 'edit'
+    };
+    return iconMap[status] || 'help';
   }
 }

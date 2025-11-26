@@ -1,32 +1,81 @@
-import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { filter, map, distinctUntilChanged } from 'rxjs/operators';
+
+export interface BreadcrumbItem {
+  label: string;
+  url: string;
+}
 
 @Component({
   selector: 'app-breadcrumb',
-  template: `
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ currentRoute }}</li>
-      </ol>
-    </nav>
-  `,
-  styles: [`
-    .breadcrumb { display: flex; list-style: none; padding: 10px 0; margin: 0; }
-    .breadcrumb-item + .breadcrumb-item::before { content: "/"; padding: 0 8px; color: #6c757d; }
-    .breadcrumb-item a { text-decoration: none; color: #007bff; }
-    .breadcrumb-item.active { color: #6c757d; }
-  `]
+  templateUrl: './breadcrumb.component.html',
+  styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent {
-  currentRoute = '';
+export class BreadcrumbComponent implements OnInit {
+  breadcrumbs$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    distinctUntilChanged(),
+    map(() => this.buildBreadcrumb(this.activatedRoute.root))
+  );
 
-  constructor(private router: Router) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.currentRoute = event.urlAfterRedirects.split('/').pop() || 'Dashboard';
-    });
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {}
+
+  private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: BreadcrumbItem[] = []): BreadcrumbItem[] {
+    const children: ActivatedRoute[] = route.children;
+
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
+      if (routeURL !== '') {
+        url += `/${routeURL}`;
+      }
+
+      const label = child.snapshot.data['breadcrumb'] || this.getLabelFromUrl(routeURL);
+      if (label && label !== 'Home') {
+        breadcrumbs.push({ label, url });
+      }
+
+      return this.buildBreadcrumb(child, url, breadcrumbs);
+    }
+
+    return breadcrumbs;
+  }
+
+  private getLabelFromUrl(url: string): string {
+    if (!url) return '';
+    
+    // Convert URL segments to readable labels
+    const labelMap: { [key: string]: string } = {
+      'dashboard': 'Dashboard',
+      'users': 'Users',
+      'transactions': 'Transactions',
+      'reports': 'Reports',
+      'settings': 'Settings',
+      'builder': 'Report Builder',
+      'saved': 'Saved Reports',
+      'scheduled': 'Scheduled Reports',
+      'roles': 'Roles & Permissions',
+      'activity': 'Activity Log',
+      'pending': 'Pending',
+      'failed': 'Failed'
+    };
+
+    const segments = url.split('/');
+    const lastSegment = segments[segments.length - 1];
+    return labelMap[lastSegment] || this.capitalizeFirst(lastSegment);
+  }
+
+  private capitalizeFirst(str: string): string {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).replace(/-/g, ' ');
   }
 }

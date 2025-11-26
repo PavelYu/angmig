@@ -1,1 +1,21 @@
-<p>confirm-dialog works!</p>
+<h2 mat-dialog-title>{{ data.title || 'Confirm Action' }}</h2>
+<mat-dialog-content>
+  <div class="dialog-content">
+    <mat-icon class="warning-icon" *ngIf="data.type === 'warning'">warning</mat-icon>
+    <mat-icon class="error-icon" *ngIf="data.type === 'error'">error</mat-icon>
+    <mat-icon class="info-icon" *ngIf="data.type === 'info'">info</mat-icon>
+    <p class="message">{{ data.message }}</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close [attr.aria-label]="data.cancelLabel || 'Cancel'">
+    {{ data.cancelLabel || 'Cancel' }}
+  </button>
+  <button 
+    mat-raised-button 
+    [color]="data.confirmColor || 'primary'"
+    [mat-dialog-close]="true"
+    [attr.aria-label]="data.confirmLabel || 'Confirm'">
+    {{ data.confirmLabel || 'Confirm' }}
+  </button>
+</mat-dialog-actions>

@@ -1,22 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { LoadingService } from '../../../core/services/loading.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-loading-spinner',
-  template: `
-    <div class="spinner-overlay">
-      <mat-spinner diameter="50"></mat-spinner>
-    </div>
-  `,
-  styles: [`
-    .spinner-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  `]
+  templateUrl: './loading-spinner.component.html',
+  styleUrls: ['./loading-spinner.component.scss']
 })
-export class LoadingSpinnerComponent { }
+export class LoadingSpinnerComponent implements OnInit, OnDestroy {
+  isLoading = false;
+  private destroy$ = new Subject<void>();
+
+  constructor(private loadingService: LoadingService) {}
+
+  ngOnInit(): void {
+    this.loadingService.loading$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(loading => {
+        this.isLoading = loading;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
