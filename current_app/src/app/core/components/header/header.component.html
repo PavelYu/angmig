@@ -1,0 +1,30 @@
+<mat-toolbar color="primary" class="app-header">
+    <button mat-icon-button (click)="toggleSidenav.emit()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span>Enterprise App</span>
+
+    <span class="spacer"></span>
+
+    <div class="search-bar">
+        <mat-icon>search</mat-icon>
+        <input type="text" placeholder="Global Search...">
+    </div>
+
+    <button mat-icon-button (click)="toggleTheme()">
+        <mat-icon>{{ (isDark$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="currentUser$ | async as user">
+        <mat-icon>account_circle</mat-icon>
+        <span class="username">{{ user.username }}</span>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item>Settings</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+</mat-toolbar>

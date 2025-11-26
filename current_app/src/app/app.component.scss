@@ -1,0 +1,21 @@
+.app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-sidenav {
+    width: 250px;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.main-content {
+    padding: 20px;
+    min-height: calc(100vh - 64px - 50px);
+    /* Header - Footer */
+    background-color: #f5f5f5;
+}
+
+.dark-theme .main-content {
+    background-color: #303030;
+}

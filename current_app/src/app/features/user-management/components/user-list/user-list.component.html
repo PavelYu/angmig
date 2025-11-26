@@ -1,0 +1,10 @@
+<div class="user-list-container">
+    <div class="page-header">
+        <h2>User Management</h2>
+        <button mat-raised-button color="primary">Add User</button>
+    </div>
+
+    <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="rowData"
+        [columnDefs]="columnDefs" [gridOptions]="gridOptions">
+    </ag-grid-angular>
+</div>

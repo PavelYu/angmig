@@ -1,0 +1,31 @@
+<div class="dashboard-grid">
+    <div class="kpi-section">
+        <app-kpi-card *ngFor="let kpi of kpiData" [title]="kpi.title" [value]="kpi.value" [trend]="kpi.trend"
+            [chartData]="kpi.chartData">
+        </app-kpi-card>
+    </div>
+
+    <div class="charts-section">
+        <mat-card class="chart-card">
+            <mat-card-header>
+                <mat-card-title>Revenue Overview</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <app-revenue-chart></app-revenue-chart>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="chart-card">
+            <mat-card-header>
+                <mat-card-title>Geographic Distribution</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <app-regional-map></app-regional-map>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="feed-section">
+        <app-activity-feed></app-activity-feed>
+    </div>
+</div>
