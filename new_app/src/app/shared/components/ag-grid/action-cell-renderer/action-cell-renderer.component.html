@@ -1,0 +1,28 @@
+<div class="action-cell-renderer">
+  <button 
+    mat-icon-button 
+    [matMenuTriggerFor]="menu" 
+    (click)="$event.stopPropagation()"
+    [attr.aria-label]="'Actions for ' + (params.data?.name || params.data?.id)">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onView()" *ngIf="hasAction('onView')">
+      <mat-icon>visibility</mat-icon>
+      <span>View</span>
+    </button>
+    <button mat-menu-item (click)="onEdit()" *ngIf="hasAction('onEdit')">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="onDuplicate()" *ngIf="hasAction('onDuplicate')">
+      <mat-icon>content_copy</mat-icon>
+      <span>Duplicate</span>
+    </button>
+    <mat-divider *ngIf="hasAction('onDelete')"></mat-divider>
+    <button mat-menu-item (click)="onDelete()" *ngIf="hasAction('onDelete')" class="delete-action">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+</div>

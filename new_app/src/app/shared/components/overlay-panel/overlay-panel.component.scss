@@ -1,0 +1,26 @@
+.overlay-panel-wrapper {
+  display: inline-block;
+
+  .trigger-element {
+    cursor: pointer;
+  }
+}
+
+::ng-deep .overlay-panel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  min-width: 200px;
+  max-width: 500px;
+
+  .overlay-panel-content {
+    // Content styles
+  }
+}
+
+::ng-deep .dark-theme .overlay-panel {
+  background: #424242;
+  color: #e0e0e0;
+}
+

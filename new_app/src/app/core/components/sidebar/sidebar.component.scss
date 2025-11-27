@@ -1,0 +1,101 @@
+mat-nav-list {
+  padding-top: 0;
+
+  mat-list-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.active {
+      background-color: rgba(63, 81, 181, 0.1);
+      border-left: 3px solid #3f51b5;
+    }
+
+    .badge {
+      position: absolute;
+      right: 40px;
+      background: #f44336;
+      color: white;
+      border-radius: 12px;
+      font-size: 11px;
+      min-width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      font-weight: 600;
+    }
+
+    .expand-icon {
+      position: absolute;
+      right: 8px;
+      transition: transform 0.2s;
+    }
+
+    &.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .submenu {
+    background-color: rgba(0, 0, 0, 0.02);
+    padding-left: 0;
+    overflow: hidden;
+    animation: slideDown 0.3s ease-out;
+
+    a {
+      padding-left: 56px !important;
+
+      .submenu-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+      }
+
+      &.active-link {
+        background-color: rgba(63, 81, 181, 0.08);
+        border-left: 3px solid #3f51b5;
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+.dark-theme {
+  mat-nav-list {
+    mat-list-item {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      &.active {
+        background-color: rgba(63, 81, 181, 0.2);
+      }
+    }
+
+    .submenu {
+      background-color: rgba(255, 255, 255, 0.02);
+
+      a.active-link {
+        background-color: rgba(63, 81, 181, 0.15);
+      }
+    }
+  }
+}
+

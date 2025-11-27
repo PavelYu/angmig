@@ -1,0 +1,14 @@
+<mat-form-field appearance="outline" class="time-picker-field">
+  <mat-label>{{ placeholder }}</mat-label>
+  <input 
+    matInput 
+    [formControl]="timeControl"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    [ngxTimepicker]="picker"
+    [format]="showSeconds ? 'HH:mm:ss' : 'HH:mm'"
+    readonly>
+  <mat-icon matSuffix (click)="picker.open()">access_time</mat-icon>
+  <ngx-material-timepicker #picker></ngx-material-timepicker>
+</mat-form-field>
+

@@ -1,0 +1,17 @@
+<mat-icon 
+  *ngIf="!useSvg"
+  [class]="size"
+  [style.color]="color"
+  [style.font-size.px]="fontSize">
+  {{ name }}
+</mat-icon>
+
+<svg 
+  *ngIf="useSvg"
+  class="icon" 
+  [class]="size"
+  [style.width.px]="sizePx"
+  [style.height.px]="sizePx"
+  [style.fill]="color">
+  <use [attr.href]="'assets/icons.svg#' + name"></use>
+</svg>

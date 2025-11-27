@@ -1,0 +1,51 @@
+<div class="report-content-viewer">
+  <div class="report-header" *ngIf="title">
+    <h2>{{ title }}</h2>
+    <div class="report-actions">
+      <button mat-icon-button (click)="printReport()" matTooltip="Print">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-icon-button *ngIf="isPdf" (click)="downloadPdf()" matTooltip="Download PDF">
+        <mat-icon>download</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="report-content">
+    <!-- PDF Viewer -->
+    <iframe 
+      *ngIf="isPdf && safeContent"
+      [src]="safeContent"
+      class="pdf-viewer"
+      frameborder="0">
+    </iframe>
+
+    <!-- Markdown Content -->
+    <app-markdown-viewer 
+      *ngIf="format === 'markdown' && content"
+      [content]="content"
+      [sanitize]="true">
+    </app-markdown-viewer>
+
+    <!-- HTML Content -->
+    <div 
+      *ngIf="format === 'html' && safeContent && !isPdf"
+      class="html-content"
+      [innerHTML]="safeContent">
+    </div>
+
+    <!-- Plain Text Content -->
+    <div 
+      *ngIf="format === 'text' && safeContent && !isPdf"
+      class="text-content"
+      [innerHTML]="safeContent">
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!content && !pdfUrl">
+      <mat-icon>description</mat-icon>
+      <p>No content available</p>
+    </div>
+  </div>
+</div>
+

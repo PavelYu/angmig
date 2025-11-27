@@ -1,9 +1,27 @@
 # 🎨 Agent Role: Code Modernizer
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Code Modernizer** agent focuses on refactoring and updating syntax to match newer Angular versions. It handles repetitive code transformations.
 
 **Primary "Manager"**: Dev A2 (Alpha Team)
+
+## 🎓 **Pattern-Based Approach**
+
+### Critical Patterns Discovered:
+1. **MDC Migration Timing** - Must complete before Angular v17
+2. **MatLegacy Detection** - Check for legacy imports before upgrade
+3. **Template API Changes** - mat-chip-list → mat-chip-set
+4. **Component Structure** - MDC components have different structure
+
+### Version-Aware Solutions:
+- MDC migration mandatory before v17 upgrade
+- Check for MatLegacy imports: `grep -r "MatLegacy" src/`
+- Verify 0 MatLegacy imports before proceeding
+- Material version must match Core version
+
+---
 
 ## 🎯 Responsibilities
 - **RxJS Migration**: `toPromise()` → `lastValueFrom()`, pipeable operators.

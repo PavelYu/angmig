@@ -1,0 +1,34 @@
+<div class="clipboard-grid-container">
+  <div class="grid-header">
+    <h3>Clipboard Grid</h3>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="copyToClipboard()" matTooltip="Copy selected cells (Ctrl+C)">
+        <mat-icon>content_copy</mat-icon>
+        Copy
+      </button>
+      <button mat-stroked-button (click)="pasteFromClipboard()" matTooltip="Paste from clipboard (Ctrl+V)">
+        <mat-icon>content_paste</mat-icon>
+        Paste
+      </button>
+      <button mat-stroked-button (click)="cutToClipboard()" matTooltip="Cut selected cells (Ctrl+X)">
+        <mat-icon>content_cut</mat-icon>
+        Cut
+      </button>
+    </div>
+  </div>
+  
+  <div class="grid-hint">
+    <p>💡 Tip: Select cells and use Ctrl+C to copy, Ctrl+V to paste, or Ctrl+X to cut</p>
+  </div>
+  
+  <ag-grid-angular 
+    #agGrid
+    style="width: 100%; height: 500px;" 
+    class="ag-theme-alpine" 
+    [rowData]="rowData"
+    [columnDefs]="columnDefs" 
+    [gridOptions]="gridOptions"
+    (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+</div>
+

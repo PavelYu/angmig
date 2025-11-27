@@ -1,5 +1,7 @@
 # 🏛️ Agent Role: Architecture Reviewer
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Architecture Reviewer** agent acts as a high-level auditor, helping the Tech Lead spot structural issues, circular dependencies, and bundle bloat before they become critical.
 

@@ -1,0 +1,39 @@
+<div class="user-list-container">
+    <div class="page-header">
+        <h2>User Management</h2>
+        <div class="header-actions">
+            <span class="selected-count" *ngIf="selectedRows.length > 0">
+                {{ selectedRows.length }} selected
+            </span>
+            <button mat-stroked-button 
+                    *ngIf="selectedRows.length > 0"
+                    (click)="onBulkDelete()">
+                <mat-icon>delete</mat-icon>
+                Delete Selected
+            </button>
+            <button mat-raised-button color="primary" (click)="onAddUser()">
+                <mat-icon>add</mat-icon>
+                Add User
+            </button>
+        </div>
+    </div>
+
+    <app-grid-toolbar 
+        (search)="onSearch($event)"
+        (exportCsv)="onExportCsv()"
+        (exportExcel)="onExportExcel()"
+        (toggleColumns)="onToggleColumns()">
+    </app-grid-toolbar>
+
+    <div class="grid-container">
+        <ag-grid-angular 
+            #agGrid
+            style="width: 100%; height: calc(100vh - 300px);" 
+            class="ag-theme-alpine" 
+            [rowData]="rowData"
+            [columnDefs]="columnDefs" 
+            [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+    </div>
+</div>

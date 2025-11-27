@@ -1,0 +1,71 @@
+<div class="stepper-form-container">
+  <mat-stepper 
+    [linear]="linear"
+    [orientation]="orientation"
+    (selectionChange)="onStepChange($event)">
+    
+    <mat-step 
+      *ngFor="let step of steps; let i = index"
+      [stepControl]="linear ? step.formGroup : null"
+      [optional]="step.optional"
+      [completed]="linear ? isStepValid(i) : true">
+      
+      <ng-template matStepLabel>
+        <div class="step-label">
+          <mat-icon *ngIf="step.icon" class="step-icon">{{ step.icon }}</mat-icon>
+          <div>
+            <div class="step-title">{{ step.label }}</div>
+            <div class="step-description" *ngIf="step.description">{{ step.description }}</div>
+          </div>
+        </div>
+      </ng-template>
+
+      <form [formGroup]="step.formGroup" class="step-form">
+        <ng-content [select]="'[step-' + i + ']'"></ng-content>
+        
+        <!-- Default form fields if no content projection -->
+        <div *ngIf="step.formGroup.controls && Object.keys(step.formGroup.controls).length > 0" class="default-form-fields">
+          <mat-form-field *ngFor="let controlName of getControlNames(step.formGroup)" appearance="outline">
+            <mat-label>{{ formatLabel(controlName) }}</mat-label>
+            <input matInput [formControlName]="controlName" [type]="getInputType(controlName)">
+            <mat-error *ngIf="step.formGroup.get(controlName)?.hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error *ngIf="step.formGroup.get(controlName)?.hasError('email')">
+              Invalid email format
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="step-actions">
+        <button 
+          mat-stroked-button 
+          *ngIf="i > 0"
+          (click)="previousStep()">
+          <mat-icon>arrow_back</mat-icon>
+          Previous
+        </button>
+        <button 
+          mat-raised-button 
+          color="primary"
+          *ngIf="i < steps.length - 1"
+          [disabled]="linear && !isStepValid(i)"
+          (click)="nextStep()">
+          Next
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <button 
+          mat-raised-button 
+          color="primary"
+          *ngIf="i === steps.length - 1"
+          [disabled]="linear && !isStepValid(i)"
+          (click)="onSubmit()">
+          <mat-icon>check</mat-icon>
+          Submit
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
+

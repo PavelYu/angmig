@@ -1,0 +1,10 @@
+<div 
+  class="scrollable-container"
+  [style.height]="height"
+  [style.max-height]="maxHeight"
+  [style.scrollbar-width]="scrollbarWidth"
+  [style.scrollbar-color]="scrollbarColor + ' ' + scrollbarTrackColor"
+  #scrollContainer>
+  <ng-content></ng-content>
+</div>
+

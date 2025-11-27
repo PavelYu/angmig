@@ -1,0 +1,23 @@
+<div class="virtual-scroll-container">
+  <cdk-virtual-scroll-viewport 
+    [itemSize]="itemHeight"
+    class="virtual-scroll-viewport">
+    
+    <div 
+      *cdkVirtualFor="let item of items; trackBy: trackByFn"
+      class="virtual-scroll-item"
+      [style.height.px]="itemHeight"
+      (click)="onItemClick(item)">
+      <ng-container *ngIf="templateRef; else defaultTemplate">
+        <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: item, index: $index }"></ng-container>
+      </ng-container>
+      <ng-template #defaultTemplate>
+        <div class="item-content">
+          <span class="item-id">#{{ item.id }}</span>
+          <span class="item-name">{{ item.name || item.label || item.title || 'Item' }}</span>
+        </div>
+      </ng-template>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>
+

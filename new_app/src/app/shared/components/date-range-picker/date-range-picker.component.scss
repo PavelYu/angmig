@@ -1,0 +1,26 @@
+.date-range-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .date-field {
+    flex: 1;
+  }
+
+  .separator {
+    color: #666;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .clear-btn {
+    flex-shrink: 0;
+  }
+}
+
+.dark-theme {
+  .date-range-picker-container .separator {
+    color: #b0b0b0;
+  }
+}
+

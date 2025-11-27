@@ -1,9 +1,26 @@
 # 🧠 Agent Role: Logic Refactorer
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Logic Refactorer** agent handles complex backend logic migrations, focusing on Services, HTTP, and State Management. It ensures that business logic remains intact while APIs are modernized.
 
 **Primary "Manager"**: Dev B1 (Beta Team)
+
+## 🎓 **Pattern-Based Approach**
+
+### Critical Patterns Discovered:
+1. **Location.back() API** - Doesn't exist, use Router.navigate()
+2. **AG Grid v28+ API** - State management API changed
+3. **Highcharts API** - updateFlag property removed
+4. **RxJS toPromise()** - Deprecated, use lastValueFrom()
+
+### Version-Aware Solutions:
+- Always check Angular version before applying fixes
+- Check library versions for API compatibility
+- Consult migration guides for breaking changes
+
+---
 
 ## 🎯 Responsibilities
 - **HTTP Migration**: Convert `HttpClientModule` to `provideHttpClient`.

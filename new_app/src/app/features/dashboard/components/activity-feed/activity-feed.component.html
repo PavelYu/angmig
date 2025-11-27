@@ -1,0 +1,38 @@
+<div class="activity-feed-container">
+  <div class="feed-header">
+    <h3>Recent Activity</h3>
+    <button mat-icon-button matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <div class="feed-list" #feedContainer>
+    <div class="feed-item" 
+         *ngFor="let item of items" 
+         (click)="onItemClick(item)"
+         [class.has-target]="item.target">
+      <div class="activity-icon" [style.background-color]="item.color + '20'">
+        <mat-icon [style.color]="item.color">{{ item.icon }}</mat-icon>
+      </div>
+      
+      <div class="activity-content">
+        <div class="activity-message">
+          <span class="user-name">{{ item.user }}</span>
+          <span class="action">{{ item.action }}</span>
+          <span class="target" *ngIf="item.target">{{ item.target }}</span>
+        </div>
+        <div class="activity-time">{{ getTimeAgo(item.timestamp) }}</div>
+      </div>
+    </div>
+
+    <div class="loading-indicator" *ngIf="isLoading">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>Loading more...</span>
+    </div>
+
+    <div class="no-more" *ngIf="!hasMore && !isLoading">
+      <mat-icon>check_circle</mat-icon>
+      <span>All activities loaded</span>
+    </div>
+  </div>
+</div>

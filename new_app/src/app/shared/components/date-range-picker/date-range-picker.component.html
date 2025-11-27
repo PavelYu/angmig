@@ -1,0 +1,41 @@
+<div class="date-range-picker-container">
+  <mat-form-field appearance="outline" class="date-field">
+    <mat-label>Start Date</mat-label>
+    <input 
+      matInput 
+      [matDatepicker]="startPicker"
+      [formControl]="range.controls.start"
+      [disabled]="disabled"
+      [min]="minDate"
+      [max]="maxDate || range.value.end?.toDate()"
+      placeholder="Start date">
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+
+  <span class="separator">to</span>
+
+  <mat-form-field appearance="outline" class="date-field">
+    <mat-label>End Date</mat-label>
+    <input 
+      matInput 
+      [matDatepicker]="endPicker"
+      [formControl]="range.controls.end"
+      [disabled]="disabled"
+      [min]="range.value.start?.toDate() || minDate"
+      [max]="maxDate"
+      placeholder="End date">
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+
+  <button 
+    mat-icon-button 
+    *ngIf="range.value.start || range.value.end"
+    (click)="clearRange()"
+    matTooltip="Clear range"
+    class="clear-btn">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+

@@ -1,0 +1,124 @@
+<div class="report-builder-container">
+  <div class="builder-header">
+    <h2>Report Builder</h2>
+    <p class="subtitle">Create custom reports with filters, charts, and data exports</p>
+  </div>
+
+  <mat-card class="builder-card">
+    <mat-card-content>
+      <form [formGroup]="reportForm" (ngSubmit)="generate()" class="report-form">
+        <div class="form-section">
+          <h3 class="section-title">Report Configuration</h3>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Report Type</mat-label>
+              <mat-select formControlName="type" required>
+                <mat-option value="financial">
+                  <div class="option-content">
+                    <mat-icon>account_balance</mat-icon>
+                    <span>Financial Summary</span>
+                  </div>
+                </mat-option>
+                <mat-option value="usage">
+                  <div class="option-content">
+                    <mat-icon>analytics</mat-icon>
+                    <span>User Activity</span>
+                  </div>
+                </mat-option>
+                <mat-option value="audit">
+                  <div class="option-content">
+                    <mat-icon>security</mat-icon>
+                    <span>Audit Log</span>
+                  </div>
+                </mat-option>
+                <mat-option value="performance">
+                  <div class="option-content">
+                    <mat-icon>speed</mat-icon>
+                    <span>Performance Metrics</span>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>description</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Report Name</mat-label>
+              <input matInput formControlName="name" placeholder="My Custom Report">
+              <mat-icon matPrefix>title</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Date Range</mat-label>
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date">
+                <input matEndDate formControlName="end" placeholder="End date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+              <mat-icon matPrefix>date_range</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+              <mat-label>Format</mat-label>
+              <mat-select formControlName="format">
+                <mat-option value="pdf">PDF</mat-option>
+                <mat-option value="excel">Excel</mat-option>
+                <mat-option value="csv">CSV</mat-option>
+                <mat-option value="html">HTML</mat-option>
+              </mat-select>
+              <mat-icon matPrefix>file_download</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form-section">
+          <h3 class="section-title">Report Options</h3>
+          
+          <div class="options-grid">
+            <mat-checkbox formControlName="includeCharts" class="option-checkbox">
+              <mat-icon>bar_chart</mat-icon>
+              <span>Include Charts</span>
+            </mat-checkbox>
+            
+            <mat-checkbox formControlName="includeTables" class="option-checkbox">
+              <mat-icon>table_chart</mat-icon>
+              <span>Include Data Tables</span>
+            </mat-checkbox>
+            
+            <mat-checkbox formControlName="includeSummary" class="option-checkbox">
+              <mat-icon>summarize</mat-icon>
+              <span>Executive Summary</span>
+            </mat-checkbox>
+            
+            <mat-checkbox formControlName="groupByCategory" class="option-checkbox">
+              <mat-icon>category</mat-icon>
+              <span>Group by Category</span>
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="preview()">
+            <mat-icon>preview</mat-icon>
+            Preview
+          </button>
+          <button mat-stroked-button type="button" (click)="saveTemplate()">
+            <mat-icon>save</mat-icon>
+            Save Template
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid">
+            <mat-icon>play_arrow</mat-icon>
+            Generate Report
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

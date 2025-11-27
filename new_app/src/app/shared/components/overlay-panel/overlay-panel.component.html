@@ -1,0 +1,20 @@
+<ng-template #triggerTemplate>
+  <ng-content select="[trigger]"></ng-content>
+</ng-template>
+
+<div class="overlay-panel-wrapper">
+  <div 
+    class="trigger-element"
+    (click)="trigger === 'click' && toggle()"
+    (mouseenter)="trigger === 'hover' && open()"
+    (mouseleave)="trigger === 'hover' && close()">
+    <ng-content select="[trigger]"></ng-content>
+  </div>
+
+  <ng-template #panelTemplate>
+    <div class="overlay-panel-content">
+      <ng-content select="[content]"></ng-content>
+    </div>
+  </ng-template>
+</div>
+

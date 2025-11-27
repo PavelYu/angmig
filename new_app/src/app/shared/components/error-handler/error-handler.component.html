@@ -1,0 +1,36 @@
+<div class="error-handler-container" [ngClass]="getStatusClass()">
+  <div class="error-icon">
+    <mat-icon>{{ getIcon() }}</mat-icon>
+  </div>
+  
+  <div class="error-content">
+    <h2 class="error-title">{{ errorMessage }}</h2>
+    
+    <div class="error-status" *ngIf="statusCode">
+      <span class="status-code">{{ statusCode }}</span>
+      <span class="status-phrase">{{ statusPhrase }}</span>
+    </div>
+
+    <div class="error-details" *ngIf="showDetails && error">
+      <div class="detail-item" *ngIf="error.url">
+        <strong>URL:</strong> {{ error.url }}
+      </div>
+      <div class="detail-item" *ngIf="error.error">
+        <strong>Details:</strong>
+        <pre>{{ error.error | json }}</pre>
+      </div>
+    </div>
+
+    <div class="error-actions">
+      <button mat-raised-button color="primary" (click)="reloadPage()">
+        <mat-icon>refresh</mat-icon>
+        Retry
+      </button>
+      <button mat-stroked-button routerLink="/">
+        <mat-icon>home</mat-icon>
+        Go Home
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -1,5 +1,7 @@
 # 🧐 Agent Role: Code Reviewer
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Code Reviewer** agent acts as a "Gatekeeper" that any developer can use to pre-validate their work before sending it to the Tech Lead. It catches style violations, common anti-patterns, and missing tests.
 

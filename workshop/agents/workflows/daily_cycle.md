@@ -6,15 +6,17 @@ To maximize efficiency, we run AI agents in a structured daily cycle that aligns
 ## 📅 The Schedule
 
 ### 08:00 - 09:00: The "Night Shift" Review
-*   **Who**: Tech Lead & QA
+*   **Who**: Tech Lead & AQA Team
 *   **Activity**: Review the results of overnight automated jobs (CI/CD, Test Runs).
-*   **Agent Task**:
-    *   `@TestMigrator`: "Analyze the overnight test failures and group them by error type."
+*   **Agent Tasks**:
+    *   **AQA 1** → `@UnitTestMigrator`: "Analyze the overnight Vitest test failures and group them by error type."
+    *   **AQA 2** → `@E2ETestMigrator`: "Analyze the overnight Playwright test failures and visual regression results."
 
 ### 09:15 - 12:00: The "Batch Processing" Block
-*   **Who**: All Devs
+*   **Who**: All Devs + AQA Team (Parallel Work)
 *   **Activity**: Assign large batch tasks to agents while doing deep work.
-*   **Agent Tasks**:
+
+**Dev Team Agent Tasks**:
     *   **Tech Lead** → `@ArchitectureReviewer`: "Check for circular deps in `src/app`."
     *   **Dev A1** → `@BuildFixer`: "Fix these 50 TypeScript errors."
     *   **Dev A2** → `@CodeModernizer`: "Convert this module's templates to control flow."
@@ -22,7 +24,11 @@ To maximize efficiency, we run AI agents in a structured daily cycle that aligns
     *   **Dev B1** → `@LogicRefactorer`: "Convert `AuthService` to use `inject()`."
     *   **Dev B2** → `@DependencyAuditor`: "Check compatibility for `ngx-charts`."
     *   **Dev B3** → `@InfraPerfOptimizer`: "Optimize bundle budgets to 2mb."
-    *   **QA** → `@TestMigrator`: "Migrate `login.spec.ts` to Vitest."
+
+**AQA Team Agent Tasks** (Independent of Dev Work):
+    *   **AQA 1** → `@UnitTestMigrator`: "Migrate 20 Karma tests from `src/app/auth` to Vitest."
+    *   **AQA 2** → `@E2ETestMigrator`: "Migrate Protractor login tests to Playwright."
+    *   **AQA 2** → `@E2ETestMigrator`: "Create visual regression tests for dashboard components."
 
 ### 13:00 - 16:00: The "Integration" Block
 *   **Who**: All Devs
@@ -33,10 +39,11 @@ To maximize efficiency, we run AI agents in a structured daily cycle that aligns
     *   `@DependencyAuditor`: "Check if the new library version conflicts with anything."
 
 ### 16:00 - 17:00: The "Cleanup" Block
-*   **Who**: QA & Tech Lead
+*   **Who**: AQA Team & Tech Lead
 *   **Activity**: Prepare for the overnight run.
 *   **Agent Tasks**:
-    *   `@TestMigrator`: "Run the full suite and flag flaky tests."
+    *   **AQA 1** → `@UnitTestMigrator`: "Run full Vitest suite and flag flaky tests."
+    *   **AQA 2** → `@E2ETestMigrator`: "Run full Playwright suite and visual regression tests."
 
 ## 🧠 Context7 Sync
 **Critical Step**: At the end of each block, if you corrected an agent, you **MUST** update Context7.

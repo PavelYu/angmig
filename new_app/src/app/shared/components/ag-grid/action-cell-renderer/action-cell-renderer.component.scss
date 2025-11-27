@@ -1,0 +1,39 @@
+.action-cell-renderer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  button {
+    mat-icon {
+      color: #666;
+    }
+
+    &:hover mat-icon {
+      color: #1976d2;
+    }
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  .delete-action {
+    color: #f44336;
+
+    mat-icon {
+      color: #f44336;
+    }
+
+    &:hover {
+      background-color: #ffebee;
+    }
+  }
+}
+
+.dark-theme {
+  ::ng-deep .mat-menu-panel {
+    .delete-action:hover {
+      background-color: #3e2723;
+    }
+  }
+}
+

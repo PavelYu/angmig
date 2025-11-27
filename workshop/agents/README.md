@@ -2,19 +2,31 @@
 
 ## 🎉 Status: **PRODUCTION READY** ✅
 
-**All 9 AI agents have been enriched with comprehensive, production-ready prompts!**
+**All 11 AI agents have been enriched with comprehensive, production-ready prompts!**
 
-- ✅ **45 detailed prompt templates** across all agents
+- ✅ **50+ detailed prompt templates** across all agents
 - ✅ **200+ before/after code examples**
 - ✅ **100+ executable bash commands**
-- ✅ **136 KB of detailed instructions**
+- ✅ **150+ KB of detailed instructions**
+- ✅ **Clear Dev/AQA team separation** ✅
+- ✅ **AQA team always-busy strategy** ✅
 - ✅ Ready for your **4-day Fast Track** migration
 
 ---
 
 ## Overview
 
-This directory defines the **AI Agents** that will act as force multipliers for the Angular v15 → v20 migration. Think of these agents not just as tools, but as **specialized junior developers** that work 24/7 under the guidance of your Team Lead and Senior Developers.
+This directory defines the **AI Agents** (prompt templates) that will act as force multipliers for the Angular v15 → v20 migration. Think of these agents not just as tools, but as **specialized junior developers** that work 24/7 under the guidance of your Team Lead and Senior Developers.
+
+> **Important**: 
+> - **Prompt Templates**: The files in `roles/` are prompt templates (Markdown files) used with **Zed's Agent Panel** (built-in AI chat) and **MCP servers**.
+> - **ACP Agents**: Actual executable ACP agents are available in `acp-agents/` directory. See [acp-agents/README.md](acp-agents/README.md) for setup.
+> - See [docs/zed-guide.md](docs/zed-guide.md) for details on ACP agents vs MCP servers vs prompt templates.
+
+> [!IMPORTANT]
+> **Team Separation**: Agents are organized by team:
+> - **Dev Team Agents** (8 agents): Focus on code migration, build fixes, feature development
+> - **AQA Team Agents** (3 agents): Focus on testing, quality assurance - **work independently of Angular version**
 
 Each agent has been **enriched with highly detailed prompts** that include:
 - Step-by-step instructions
@@ -28,7 +40,9 @@ Each agent has been **enriched with highly detailed prompts** that include:
 
 ## 👥 The "Org Chart"
 
-We have defined **9 specialized agent roles** to handle specific migration tasks:
+We have defined **11 specialized agent roles** organized by team:
+
+## 👨‍💻 **Dev Team Agents** (8 agents)
 
 | # | Agent Role | Size | Templates | Primary Responsibility | "Manager" |
 |---|:-----------|:----:|:---------:|:-----------------------|:----------|
@@ -38,11 +52,21 @@ We have defined **9 specialized agent roles** to handle specific migration tasks
 | 4 | **[Logic Refactorer](roles/logic_refactorer.md)** | 15KB | 5 | HTTP, Guards, Interceptors, RxJS, State | **Dev B1** (Beta) |
 | 5 | **[Dependency Auditor](roles/dependency_auditor.md)** | 13KB | 5 | Package compatibility, upgrades, security | **Dev B2** (Beta) |
 | 6 | **[Infra & Perf Optimizer](roles/infra_perf_optimizer.md)** | 12KB | 5 | Node.js, Bundles, @defer, Lighthouse, CI/CD | **Dev B3** (Beta) |
-| 7 | **[Test Migrator](roles/test_migrator.md)** | 13KB | 5 | Karma→Vitest, Protractor→Playwright | **Automation QA** |
-| 8 | **[Architecture Reviewer](roles/architecture_reviewer.md)** | 13KB | 5 | Circular deps, bundle analysis, quality metrics | **Tech Lead** |
-| 9 | **[Code Reviewer](roles/code_reviewer.md)** | 17KB | 5 | Pre-PR checks, test coverage, security | **All Devs** |
+| 7 | **[Architecture Reviewer](roles/architecture_reviewer.md)** | 13KB | 5 | Circular deps, bundle analysis, quality metrics | **Tech Lead** |
+| 8 | **[Code Reviewer](roles/code_reviewer.md)** | 17KB | 5 | Pre-PR checks, test coverage, security | **All Devs** |
 
-**Total**: 136 KB of production-ready AI prompts | **45 templates** covering all migration scenarios
+## 🧪 **AQA Team Agents** (3 agents - Always Busy)
+
+| # | Agent Role | Size | Templates | Primary Responsibility | "Manager" |
+|---|:-----------|:----:|:---------:|:-----------------------|:----------|
+| 9 | **[Unit Test Migrator](roles/unit_test_migrator.md)** | 12KB | 5 | Karma→Vitest migration, test fixes, coverage | **AQA 1** (Unit Test Lead) |
+| 10 | **[E2E Test Migrator](roles/e2e_test_migrator.md)** | 12KB | 5 | Protractor→Playwright, visual regression | **AQA 2** (E2E & Visual Lead) |
+| 11 | **[Test Migrator](roles/test_migrator.md)** | 13KB | 6 | Legacy agent (backward compatibility) | **Both AQAs** |
+
+> [!IMPORTANT]
+> **Team Separation**: Dev agents focus on code migration. AQA agents focus on testing - **work independently of Angular version state**.
+
+**Total**: 150+ KB of production-ready AI prompts | **50+ templates** covering all migration scenarios
 
 ---
 
@@ -78,9 +102,10 @@ Fix the following TypeScript compilation errors:
 
 ### Step 4: Customize & Execute
 1. Replace placeholders like `[PASTE YOUR ERRORS HERE]` with your actual data
-2. Paste the prompt into **Zed Editor** with MCP servers enabled
-3. Review the AI-generated solution
-4. Apply the changes
+2. Open **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`)
+3. Paste the prompt into the Agent Panel (MCP servers should be configured and active)
+4. Review the AI-generated solution
+5. Apply the changes
 
 ### Step 5: Verify & Iterate
 ```bash
@@ -221,15 +246,17 @@ Savings: 480KB (96% reduction)
 
 ---
 
-### 7. **Test Migrator** 🧪
-**What it does**: Migrates tests to modern frameworks
+### 9. **Unit Test Migrator** 🧪 (AQA 1)
+**What it does**: Migrates Karma unit tests to Vitest
 
 **Key Templates**:
-- Karma to Vitest Migration
-- Protractor to Playwright Migration
-- Broken Test Fixes
-- Visual Regression Testing
-- Test Modernization Patterns
+- Vitest Infrastructure Setup
+- Karma to Vitest Conversion
+- Broken Test Fixes After Upgrade
+- Test Coverage Analysis
+- Test Infrastructure Maintenance
+
+**Work Independence**: ✅ Can work in parallel with dev team migrations
 
 **Example Use Case**:
 ```typescript
@@ -239,10 +266,41 @@ describe('UserComponent', () => {
 });
 
 // After: Vitest
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 describe('UserComponent', () => {
   beforeEach(() => { });
 });
 ```
+
+---
+
+### 10. **E2E Test Migrator** 🎭 (AQA 2)
+**What it does**: Migrates Protractor E2E tests to Playwright
+
+**Key Templates**:
+- Playwright Infrastructure Setup
+- Protractor to Playwright Conversion
+- Visual Regression Testing
+- New E2E Test Creation
+- Playwright Test Updates
+
+**Work Independence**: ✅ Can work in parallel with dev team migrations
+
+**Example Use Case**:
+```typescript
+// Before: Protractor
+element(by.css('.button')).click();
+
+// After: Playwright
+await page.locator('.button').click();
+```
+
+---
+
+### 11. **Test Migrator** 🧪 (Legacy - Both AQAs)
+**What it does**: Legacy agent for backward compatibility
+
+**Note**: Use Unit Test Migrator or E2E Test Migrator instead for new work
 
 ---
 
@@ -336,7 +394,8 @@ Context7, remember: For ag-grid v31, we use 'ag-theme-quartz', not 'alpine'.
 
 1. **Zed Editor**: The workspace where agents live
    - Install from: https://zed.dev
-   - Configure MCP servers (see `../ZED_MCP_SETUP.md`)
+   - Open Agent Panel: Press `Cmd+?` or Command Palette → `agent: open`
+   - Configure MCP servers (see `../docs/setup/zed-mcp-setup.md`)
 
 2. **Angular MCP**: The "Brain" containing Angular knowledge
    - Provides official Angular documentation
@@ -352,7 +411,9 @@ Context7, remember: For ag-grid v31, we use 'ag-theme-quartz', not 'alpine'.
    - Requires Upstash Redis (see setup guide)
 
 ### Configuration
-See **[ZED_MCP_SETUP.md](../ZED_MCP_SETUP.md)** for complete setup instructions.
+See **[../docs/setup/zed-mcp-setup.md](../docs/setup/zed-mcp-setup.md)** for complete setup instructions.
+
+> **Note**: MCP servers are configured under `context_servers` in `~/.config/zed/settings.json`, not `mcp.servers`. See [docs/zed-guide.md](docs/zed-guide.md) for details on Zed's agent architecture.
 
 ---
 
@@ -383,19 +444,24 @@ See **[ZED_MCP_SETUP.md](../ZED_MCP_SETUP.md)** for complete setup instructions.
 ```
 /agents/
 ├── README.md                          # This file - Main entry point
-├── ENRICHMENT_COMPLETE.md             # Detailed enrichment report
-├── roles/                             # ✅ ALL ENRICHED (136 KB)
-│   ├── architecture_reviewer.md       # 13 KB, 5 templates
-│   ├── build_fixer.md                 # 10 KB, 5 templates
-│   ├── code_modernizer.md             # 14 KB, 6 templates
-│   ├── code_reviewer.md               # 17 KB, 5 templates
-│   ├── dependency_auditor.md          # 13 KB, 5 templates
-│   ├── infra_perf_optimizer.md        # 12 KB, 5 templates
-│   ├── logic_refactorer.md            # 15 KB, 5 templates
-│   ├── style_migrator.md              # 12 KB, 5 templates
-│   └── test_migrator.md               # 13 KB, 5 templates
+├── docs/
+│   └── zed-guide.md                   # ✅ Understanding ACP vs MCP vs prompt templates
+├── AGENTS_VERIFICATION_REPORT.md      # ✅ Verification report
+├── roles/                             # ✅ ALL ENRICHED (150+ KB)
+│   ├── architecture_reviewer.md       # 13 KB, 5 templates (Dev Team)
+│   ├── build_fixer.md                 # 10 KB, 5 templates (Dev Team)
+│   ├── code_modernizer.md             # 14 KB, 6 templates (Dev Team)
+│   ├── code_reviewer.md               # 17 KB, 5 templates (Dev Team)
+│   ├── dependency_auditor.md          # 13 KB, 5 templates (Dev Team)
+│   ├── infra_perf_optimizer.md        # 12 KB, 5 templates (Dev Team)
+│   ├── logic_refactorer.md            # 15 KB, 5 templates (Dev Team)
+│   ├── style_migrator.md              # 12 KB, 5 templates (Dev Team)
+│   ├── unit_test_migrator.md          # 12 KB, 5 templates (AQA Team - AQA 1) ✅ NEW
+│   ├── e2e_test_migrator.md           # 12 KB, 5 templates (AQA Team - AQA 2) ✅ NEW
+│   └── test_migrator.md               # 13 KB, 6 templates (Legacy - Both AQAs)
 └── workflows/
     ├── daily_cycle.md                 # Daily workflow with all agents
+    ├── aqa_daily_workflow.md          # ✅ AQA team version-independent workflow ✅ NEW
     └── supervision.md                 # Supervision levels and red flags
 ```
 
@@ -478,25 +544,53 @@ Convert the following Karma test to Vitest:
 ## 📈 Migration Phases & Agent Usage
 
 ### Phase 0: Safety Net
+**Dev Team**:
 - **Architecture Reviewer**: Audit current state
 - **Dependency Auditor**: Check compatibility
 
+**AQA Team** (Parallel - Independent):
+- **Unit Test Migrator**: Setup Vitest infrastructure
+- **E2E Test Migrator**: Setup Playwright infrastructure, capture baseline
+
 ### Phase 1: v15 → v16
+**Dev Team**:
 - **Build Fixer**: Fix compilation errors
 - **Dependency Auditor**: Upgrade packages
 - **Style Migrator**: MDC migration
 
+**AQA Team** (Parallel - Independent):
+- **Unit Test Migrator**: Continue Vitest migration, fix broken tests
+- **E2E Test Migrator**: Continue Playwright migration, visual regression
+
 ### Phase 2: v16 → v17
+**Dev Team**:
 - **Code Modernizer**: Standalone components
-- **Test Migrator**: Update test syntax
+- **Logic Refactorer**: Functional APIs
+
+**AQA Team** (Parallel - Independent):
+- **Unit Test Migrator**: Continue Vitest migration, update test syntax
+- **E2E Test Migrator**: Continue Playwright migration, update selectors
 
 ### Phase 3: v17 → v18
+**Dev Team**:
 - **Logic Refactorer**: Functional APIs
 - **Code Modernizer**: Control flow syntax
 
+**AQA Team** (Parallel - Independent):
+- **Unit Test Migrator**: Continue Vitest migration, improve coverage
+- **E2E Test Migrator**: Continue Playwright migration, expand visual regression
+
 ### Phase 4: v18 → v20
+**Dev Team**:
 - **Infra & Perf Optimizer**: Performance tuning
 - **Code Reviewer**: Final validation
+
+**AQA Team** (Parallel - Independent):
+- **Unit Test Migrator**: Final Vitest migration, test optimization
+- **E2E Test Migrator**: Final Playwright migration, comprehensive visual regression
+
+> [!NOTE]
+> **AQA Team Independence**: AQA agents work in parallel with dev team, not sequentially. They can start test migration immediately, independent of Angular version upgrades.
 
 ---
 
@@ -526,9 +620,11 @@ Convert the following Karma test to Vitest:
 ## 📞 Support
 
 - **Documentation**: See individual agent files in `/roles/`
-- **Setup Guide**: `../ZED_MCP_SETUP.md`
-- **Migration Plan**: `../plan.md`
-- **Team Structure**: `../TEAM_STRUCTURE.md`
+- **Zed Architecture**: [docs/zed-guide.md](docs/zed-guide.md) - Understanding ACP agents vs MCP servers vs prompt templates
+- **Team Separation**: [../docs/guides/team-separation.md](../docs/guides/team-separation.md) - Dev vs AQA team separation guide
+- **Setup Guide**: `../docs/setup/zed-mcp-setup.md`
+- **Migration Plan**: `../docs/guides/plan.md`
+- **Team Structure**: `../docs/guides/team-structure.md`
 
 ---
 

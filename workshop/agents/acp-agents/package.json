@@ -1,0 +1,52 @@
+{
+  "name": "@angmig/acp-agents",
+  "version": "1.0.0",
+  "description": "ACP agents for Angular v15→v20 migration",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "build-fixer": "./dist/agents/build-fixer.js",
+    "code-modernizer": "./dist/agents/code-modernizer.js",
+    "style-migrator": "./dist/agents/style-migrator.js",
+    "logic-refactorer": "./dist/agents/logic-refactorer.js",
+    "dependency-auditor": "./dist/agents/dependency-auditor.js",
+    "infra-perf-optimizer": "./dist/agents/infra-perf-optimizer.js",
+    "architecture-reviewer": "./dist/agents/architecture-reviewer.js",
+    "code-reviewer": "./dist/agents/code-reviewer.js",
+    "unit-test-migrator": "./dist/agents/unit-test-migrator.js",
+    "e2e-test-migrator": "./dist/agents/e2e-test-migrator.js",
+    "test-migrator": "./dist/agents/test-migrator.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start:build-fixer": "node dist/agents/build-fixer.js",
+    "start:code-modernizer": "node dist/agents/code-modernizer.js",
+    "start:style-migrator": "node dist/agents/style-migrator.js",
+    "start:logic-refactorer": "node dist/agents/logic-refactorer.js",
+    "start:dependency-auditor": "node dist/agents/dependency-auditor.js",
+    "start:infra-perf-optimizer": "node dist/agents/infra-perf-optimizer.js",
+    "start:architecture-reviewer": "node dist/agents/architecture-reviewer.js",
+    "start:code-reviewer": "node dist/agents/code-reviewer.js",
+    "start:unit-test-migrator": "node dist/agents/unit-test-migrator.js",
+    "start:e2e-test-migrator": "node dist/agents/e2e-test-migrator.js",
+    "start:test-migrator": "node dist/agents/test-migrator.js"
+  },
+  "keywords": [
+    "acp",
+    "agent-client-protocol",
+    "zed",
+    "angular",
+    "migration"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@agentclientprotocol/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
+

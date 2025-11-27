@@ -1,0 +1,30 @@
+mat-accordion {
+  width: 100%;
+
+  mat-expansion-panel {
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-icon {
+      margin-right: 8px;
+      color: #666;
+    }
+
+    .panel-content {
+      padding: 16px 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+.dark-theme {
+  mat-accordion mat-expansion-panel {
+    .panel-icon {
+      color: #b0b0b0;
+    }
+  }
+}
+

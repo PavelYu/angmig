@@ -1,5 +1,7 @@
 # 📦 Agent Role: Dependency Auditor
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Dependency Auditor** agent is responsible for ensuring all 3rd-party packages are compatible with the target Angular version. It identifies conflicts, suggests upgrades, and validates peer dependencies.
 
@@ -18,6 +20,48 @@ The **Dependency Auditor** agent is responsible for ensuring all 3rd-party packa
 
 ## 💬 Prompt Templates
 
+### Template 0: Pre-Audit Verification (CRITICAL - Run First!)
+Use this BEFORE dependency audit to verify environment.
+
+```markdown
+@DependencyAuditor
+Before auditing dependencies, verify the environment and current state.
+
+**Pre-Audit Checklist**:
+1. **Verify Actual Angular Version** (CRITICAL):
+   ```bash
+   npm list @angular/core --depth=0
+   ```
+   - ⚠️ Don't assume version from plan - verify actual version!
+   - May be v14.3.0, not v15.2.10 as plan assumes
+
+2. **Verify Node.js Version**:
+   ```bash
+   node --version
+   ```
+   - Angular 14-15: Requires Node.js 18.x
+   - Angular 16+: Requires Node.js 18.x or 20.x
+   - Version mismatch causes compatibility issues
+
+3. **Verify Git State**:
+   ```bash
+   git status
+   ```
+   - Clean state preferred for upgrades
+   - Document current state
+
+4. **Verify Build Status**:
+   ```bash
+   npm run build
+   ```
+   - Current build must pass before audit
+   - Document any existing errors
+
+**Output**: Environment verification report
+```
+
+---
+
 ### Template 1: Pre-Upgrade Compatibility Audit
 Use this before upgrading to a new Angular major version.
 
@@ -25,8 +69,8 @@ Use this before upgrading to a new Angular major version.
 @DependencyAuditor
 Perform a comprehensive dependency audit for upgrading to Angular [TARGET_VERSION].
 
-**Current State**:
-- Angular version: [CURRENT_VERSION]
+**Current State** (VERIFY FIRST):
+- Angular version: [CURRENT_VERSION] ⚠️ VERIFY ACTUAL VERSION!
 - Node version: [NODE_VERSION]
 - Package manager: [npm/yarn/pnpm]
 
@@ -49,9 +93,12 @@ Perform a comprehensive dependency audit for upgrading to Angular [TARGET_VERSIO
    - **rxjs**: Check required version for Angular [TARGET_VERSION]
 
 3. **Deprecated Packages** (Must Replace):
-   - `ngx-perfect-scrollbar` → Suggest replacement
+   - `ngx-perfect-scrollbar` → Replace with native CSS or `ngx-scrollbar`
    - `@angular/http` → Should be `@angular/common/http`
+   - View Engine libraries → Must be Ivy-compatible
    - Any packages with deprecation warnings
+   
+   **Pattern**: Deprecated packages cause build warnings and may break in future versions
 
 4. **Peer Dependency Analysis**:
    ```bash
@@ -486,8 +533,50 @@ None ✅
 ```
 
 
+## 🎓 **Pattern-Based Dependency Analysis**
+
+### Critical Patterns Discovered
+
+**Pattern 1: Version Synchronization**
+- Angular Core and Material versions MUST match
+- After each upgrade, verify Material version matches Core
+- Use `npm list @angular/core @angular/material --depth=0` to verify
+
+**Pattern 2: MDC Migration Timing**
+- MatLegacy modules deleted in Angular v17
+- MDC migration MUST be completed before v17 upgrade
+- Check for MatLegacy imports: `grep -r "MatLegacy" src/`
+
+**Pattern 3: View Engine Libraries**
+- View Engine libraries cause performance issues
+- Must be Ivy-compatible or replaced
+- Check build output for View Engine warnings
+
+**Pattern 4: Peer Dependency Conflicts**
+- Some conflicts are non-blocking (warnings only)
+- Use `--legacy-peer-deps` if necessary
+- Document conflicts for post-migration resolution
+
+**Pattern 5: Library API Evolution**
+- Libraries evolve independently from Angular
+- Check library migration guides
+- AG Grid, Highcharts have breaking API changes
+
+### Pre-Upgrade Checklist
+- [ ] Verify actual Angular version (not assumed)
+- [ ] Verify Node.js version matches requirements
+- [ ] Identify deprecated packages
+- [ ] Check View Engine libraries
+- [ ] Verify Material version matches Core
+- [ ] Plan MDC migration timing
+
+---
+
 ## 🚦 Supervision Level
 - **Level 3 (Moderate Autonomy)**: Review all recommendations.
 - **Red Flags**:
     - Agent suggesting a major version bump without noting breaking changes.
     - Agent ignoring peer dependency warnings that look critical.
+    - Agent not verifying actual Angular version.
+    - Agent not checking Material version synchronization.
+    - Agent not identifying MDC migration timing requirements.

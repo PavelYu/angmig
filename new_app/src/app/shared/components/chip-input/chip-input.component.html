@@ -1,0 +1,29 @@
+<div class="chip-input-container" [class.disabled]="disabled">
+  <mat-form-field appearance="outline" class="chip-input-field">
+    <mat-chip-set #chipSet>
+      <mat-chip 
+        *ngFor="let chip of chips; let i = index"
+        [removable]="removable && !disabled"
+        (removed)="removeChip(i)">
+        {{ chip }}
+      </mat-chip>
+      
+      <input
+        matInput
+        [formControl]="inputControl"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        (keydown)="onInputKeydown($event)"
+        (blur)="onInputBlur()"
+        [matChipInputFor]="chipSet"
+        [matChipInputSeparatorKeyCodes]="separator === ',' ? [13, 188] : [13]"
+        [matChipInputAddOnBlur]="addOnBlur"
+        >
+    </mat-chip-set>
+    
+    <mat-hint *ngIf="maxChips">
+      {{ chips.length }} / {{ maxChips }} items
+    </mat-hint>
+  </mat-form-field>
+</div>
+

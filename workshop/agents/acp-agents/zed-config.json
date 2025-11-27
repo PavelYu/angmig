@@ -1,0 +1,60 @@
+{
+  "agent_servers": {
+    "Build Fixer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/build-fixer.js", "--acp"],
+      "env": {}
+    },
+    "Code Modernizer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/code-modernizer.js", "--acp"],
+      "env": {}
+    },
+    "Style Migrator": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/style-migrator.js", "--acp"],
+      "env": {}
+    },
+    "Logic Refactorer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/logic-refactorer.js", "--acp"],
+      "env": {}
+    },
+    "Dependency Auditor": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/dependency-auditor.js", "--acp"],
+      "env": {}
+    },
+    "Infra & Perf Optimizer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/infra-perf-optimizer.js", "--acp"],
+      "env": {}
+    },
+    "Architecture Reviewer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/architecture-reviewer.js", "--acp"],
+      "env": {}
+    },
+    "Code Reviewer": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/code-reviewer.js", "--acp"],
+      "env": {}
+    },
+    "Unit Test Migrator": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/unit-test-migrator.js", "--acp"],
+      "env": {}
+    },
+    "E2E Test Migrator": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/e2e-test-migrator.js", "--acp"],
+      "env": {}
+    },
+    "Test Migrator": {
+      "command": "node",
+      "args": ["/absolute/path/to/workshop/agents/acp-agents/dist/agents/test-migrator.js", "--acp"],
+      "env": {}
+    }
+  }
+}
+

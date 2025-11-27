@@ -1,0 +1,48 @@
+<div class="report-viewer-container">
+  <div class="viewer-header" *ngIf="reportTitle">
+    <div class="header-info">
+      <h2>{{ reportTitle }}</h2>
+      <div class="report-meta">
+        <span class="meta-item">
+          <mat-icon>schedule</mat-icon>
+          Generated: {{ generatedDate | date:'medium' }}
+        </span>
+        <span class="meta-item" *ngIf="reportFormat">
+          <mat-icon>description</mat-icon>
+          Format: {{ reportFormat }}
+        </span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-icon-button (click)="download()" matTooltip="Download Report">
+        <mat-icon>download</mat-icon>
+      </button>
+      <button mat-icon-button (click)="print()" matTooltip="Print Report">
+        <mat-icon>print</mat-icon>
+      </button>
+      <button mat-icon-button (click)="share()" matTooltip="Share Report">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="viewer-content">
+    <div *ngIf="!reportContent" class="empty-state">
+      <mat-icon class="empty-icon">description</mat-icon>
+      <h3>No Report Available</h3>
+      <p>Generate a report using the Report Builder to view it here.</p>
+      <button mat-raised-button color="primary" routerLink="/reports/builder">
+        <mat-icon>add</mat-icon>
+        Create Report
+      </button>
+    </div>
+
+    <div *ngIf="reportContent" class="report-content-wrapper">
+      <app-report-content-viewer
+        [content]="reportContent"
+        [format]="reportFormat || 'html'"
+        [title]="reportTitle">
+      </app-report-content-viewer>
+    </div>
+  </div>
+</div>

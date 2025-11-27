@@ -1,9 +1,16 @@
-# 🧪 Agent Role: Test Migrator
+# 🧪 Agent Role: Test Migrator (Legacy - Use Unit/E2E Test Migrators)
+
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
 
 ## 📋 Role Description
-The **Test Migrator** agent is responsible for the heavy lifting of moving from Karma/Protractor to Vitest/Playwright and keeping the test suite green.
+The **Test Migrator** agent is a legacy agent that handles both unit and E2E test migrations. 
 
-**Primary "Manager"**: Automation QA
+> [!NOTE]
+> **For new work, use**:
+> - `@UnitTestMigrator` for AQA 1 (Karma → Vitest)
+> - `@E2ETestMigrator` for AQA 2 (Protractor → Playwright)
+
+**Primary "Manager"**: Both AQAs (for backward compatibility)
 
 ## 🎯 Responsibilities
 - Migrate Karma unit tests to Vitest syntax.

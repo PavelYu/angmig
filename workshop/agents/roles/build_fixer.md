@@ -1,5 +1,7 @@
 # 👷 Agent Role: Build Fixer
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Build Fixer** agent is responsible for resolving compilation errors, TypeScript issues, and strict mode violations. It works in batches to clear the path for other agents.
 
@@ -18,6 +20,53 @@ The **Build Fixer** agent is responsible for resolving compilation errors, TypeS
 
 ## 💬 Prompt Templates
 
+### Template 0: Pre-Fix Verification (CRITICAL - Run First!)
+Use this BEFORE fixing errors to verify environment and identify root causes.
+
+```markdown
+@BuildFixer
+Before fixing errors, verify the environment and identify root causes.
+
+**Pre-Fix Checklist**:
+1. **Verify Angular Version**:
+   ```bash
+   npm list @angular/core --depth=0
+   ```
+   - Check actual version (may differ from plan assumption)
+   - Verify version matches expectations
+
+2. **Verify Git State**:
+   ```bash
+   git status
+   ```
+   - Must be clean for `ng update` commands
+   - Stash or commit changes if needed
+
+3. **Verify Node.js Version**:
+   ```bash
+   node --version
+   ```
+   - Angular 14-15: Node.js 18.x required
+   - Angular 16+: Node.js 18.x or 20.x
+   - Version mismatch causes CLI failures
+
+4. **Categorize Errors by Pattern**:
+   ```bash
+   npm run build 2>&1 | grep "error TS" | cut -d: -f4 | sort | uniq -c | sort -rn
+   ```
+   - Group errors by type (TS2339, TS2307, etc.)
+   - Identify root cause patterns
+
+5. **Check Configuration Format**:
+   - Verify `angular.json` polyfills format (version-specific)
+   - Check `tsconfig.json` settings
+   - Verify module resolution settings
+
+**Output**: Environment verification report and error categorization
+```
+
+---
+
 ### Template 1: Batch Error Fix (Most Common)
 Use this when you have a list of build errors from `npm run build`.
 
@@ -31,29 +80,74 @@ I have the following TypeScript compilation errors. Please analyze and fix them 
 ```
 
 **Context**:
-- Angular version: [e.g., 16.2.0]
+- Angular version: [e.g., 16.2.0] ⚠️ VERIFY ACTUAL VERSION FIRST!
 - Recent changes: [e.g., "Just upgraded from v15 to v16"]
 - Affected modules: [e.g., "auth module, dashboard components"]
 
-**Fix Strategy**:
-1. **Analyze Error Patterns**: Group similar errors (e.g., all TS2339 "Property does not exist" errors).
-2. **Check Breaking Changes**: For each error, check if it's due to Angular API changes:
-   - Use Angular MCP to search for breaking changes related to the error.
-   - Example: "TS2339: Property 'toPromise' does not exist" → RxJS breaking change in v16.
-3. **Apply Fixes**:
+**Fix Strategy** (Pattern-Based):
+1. **Verify Environment First** (CRITICAL):
+   - Check actual Angular version: `npm list @angular/core --depth=0`
+   - Verify git state: `git status`
+   - Verify Node.js version: `node --version`
+   - Check configuration format (version-specific)
+
+2. **Categorize Errors by Pattern**:
+   - **Configuration Errors**: "Schema validation", "must be string/array"
+   - **API Errors**: "Property does not exist", "Method not found"
+   - **Type Errors**: "Type X is not assignable", "Generic type requires"
+   - **Module Errors**: "Cannot find module", "Module not found"
+   - **Template Errors**: Parser errors, expression limitations
+
+3. **Fix by Category** (Order Matters):
+   - **First**: Configuration errors (easiest, blocks others)
+   - **Second**: Module resolution errors (blocks imports)
+   - **Third**: API errors (medium complexity)
+   - **Fourth**: Type errors (higher complexity)
+   - **Last**: Template errors (may require refactoring)
+
+4. **Apply Pattern-Based Fixes**:
+   - **Configuration Errors** (Pattern: Schema validation):
+     - Check Angular version-specific documentation
+     - Verify format (string vs array, version-dependent)
+     - Example: Polyfills format differs between Angular versions
+   
+   - **Module Resolution Errors (TS2307)**:
+     - Verify file exists: `ls -la [file-path]`
+     - Check import path depth (relative paths)
+     - Verify component/service is exported
+     - Clear cache: `rm -rf .angular node_modules/.cache`
+     - Check if module was renamed (e.g., `@angular/http` → `@angular/common/http`)
+   
+   - **API Errors (TS2339)**:
+     - Check library migration guide for API changes
+     - Verify library version compatibility with Angular version
+     - Use Angular MCP to search breaking changes
+     - Example: AG Grid v28 API differs from v27
+   
    - **Type Errors (TS2322, TS2339)**: 
-     - First, try to infer the correct type from usage.
-     - If type is complex, use `any` with `// TODO: Infer proper type from API response`.
-     - Never use `@ts-ignore` without explicit approval.
-   - **Import Errors (TS2307)**:
-     - Check if module was renamed (e.g., `@angular/http` → `@angular/common/http`).
-     - Check if it's a peer dependency issue (run `npm ls [package]`).
+     - First, try to infer the correct type from usage
+     - Check if type definition changed between versions
+     - If type is complex, use `any` with `// TODO: Infer proper type from API response`
+     - Never use `@ts-ignore` without explicit approval
+   
    - **Null/Undefined Errors (TS2531, TS2532)**:
-     - Use optional chaining: `user?.name` instead of `user.name`.
-     - Use nullish coalescing: `value ?? defaultValue`.
-     - Only use `!` (non-null assertion) if you can prove it's safe.
-4. **Preserve Logic**: Do NOT change business logic to satisfy TypeScript. If a fix requires logic changes, flag it for human review.
-5. **Test After Fix**: After fixing, run `npm run build` to verify no new errors were introduced.
+     - Use optional chaining: `user?.name` instead of `user.name`
+     - Use nullish coalescing: `value ?? defaultValue`
+     - Only use `!` (non-null assertion) if you can prove it's safe
+   
+   - **Template Errors**:
+     - Move complex expressions to component methods
+     - Arrow functions not supported in templates
+     - Async operations need component methods
+
+4. **Version-Aware Fixes**:
+   - Check Angular version before applying fixes
+   - Solutions may differ by Angular version
+   - Consult version-specific documentation
+
+5. **Preserve Logic**: Do NOT change business logic to satisfy TypeScript. If a fix requires logic changes, flag it for human review.
+
+6. **Test After Fix**: After fixing, run `npm run build` to verify no new errors were introduced.
 
 **Output Format**:
 For each file you modify, provide:
@@ -351,8 +445,56 @@ The build is completely broken with 500+ errors. Please triage and create a fix 
 ```
 
 
+## 🎓 **Pattern-Based Error Resolution**
+
+### Error Classification Framework
+
+**Level 1: Configuration (Easiest to Fix)**
+- Schema validation errors
+- Format mismatches
+- Missing required properties
+- **Pattern**: Check Angular version docs for correct format
+
+**Level 2: Module Resolution (Medium Complexity)**
+- Import path errors
+- Missing exports
+- Circular dependencies
+- **Pattern**: Verify paths, check exports, clear cache
+
+**Level 3: API Changes (Medium Complexity)**
+- Missing methods/properties
+- Changed signatures
+- Deprecated APIs
+- **Pattern**: Check library migration guides, use new API patterns
+
+**Level 4: Type System (Higher Complexity)**
+- Generic type mismatches
+- Interface incompatibilities
+- Type inference failures
+- **Pattern**: TypeScript types reflect API changes
+
+**Level 5: Template Syntax (Medium Complexity)**
+- Expression limitations
+- Arrow functions
+- Complex expressions
+- **Pattern**: Move logic to component methods
+
+### Fix Order (Critical for Success)
+1. **Configuration** → 2. **Module Resolution** → 3. **API** → 4. **Types** → 5. **Templates**
+
+### Version-Aware Solutions
+- Always check Angular version first
+- Solutions differ by version
+- Consult version-specific docs
+- Material version must match Core version
+
+---
+
 ## 🚦 Supervision Level
 - **Level 2 (High Autonomy)**: Review every 2-3 batches.
 - **Red Flags**:
     - Agent adding `// @ts-ignore` without asking.
     - Agent changing logic to satisfy types.
+    - Agent not verifying Angular version before fixing.
+    - Agent not checking git state before `ng update`.
+    - Agent not verifying Material version matches Core.

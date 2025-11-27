@@ -1,5 +1,7 @@
 # 🎨 Agent Role: Style Migrator
 
+> **Note**: This is a **prompt template** file, not an actual ACP agent. Copy prompts from this file into **Zed's Agent Panel** (Press `Cmd+?` or Command Palette → `agent: open`) to use with Zed's built-in AI and MCP servers.
+
 ## 📋 Role Description
 The **Style Migrator** agent is specialized in handling the massive CSS/SCSS refactoring required for the Angular Material MDC migration. It automates the tedious replacement of legacy classes and implementation of CSS variables.
 

@@ -1,0 +1,30 @@
+<div class="date-filter-container">
+  <mat-form-field appearance="outline" class="date-field">
+    <mat-label>From</mat-label>
+    <input matInput 
+           [matDatepicker]="picker" 
+           [formControl]="dateFrom"
+           (dateChange)="onDateFromChange($event)"
+           placeholder="Start date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="date-field">
+    <mat-label>To</mat-label>
+    <input matInput 
+           [matDatepicker]="picker" 
+           [formControl]="dateTo"
+           (dateChange)="onDateToChange($event)"
+           placeholder="End date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  </mat-form-field>
+
+  <button mat-icon-button 
+          *ngIf="dateFrom.value || dateTo.value"
+          (click)="clearFilter()"
+          matTooltip="Clear filter"
+          class="clear-btn">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>

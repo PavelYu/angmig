@@ -1,0 +1,85 @@
+<div class="network-graph-container">
+  <div class="graph-header">
+    <h3>Entity Relationship Graph</h3>
+    <div class="graph-controls">
+      <button mat-icon-button (click)="zoomIn()" matTooltip="Zoom In">
+        <mat-icon>zoom_in</mat-icon>
+      </button>
+      <button mat-icon-button (click)="zoomOut()" matTooltip="Zoom Out">
+        <mat-icon>zoom_out</mat-icon>
+      </button>
+      <button mat-icon-button (click)="resetZoom()" matTooltip="Reset Zoom">
+        <mat-icon>fit_screen</mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleLayout()" matTooltip="Change Layout">
+        <mat-icon>account_tree</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="graph-wrapper">
+    <ngx-graph
+      class="chart-container"
+      [view]="view"
+      [links]="links"
+      [nodes]="nodes"
+      [curve]="curve"
+      [autoZoom]="autoZoom"
+      [enableZoom]="true"
+      [panOnZoom]="true"
+      (nodeClick)="onNodeClick($event)"
+      (linkClick)="onLinkClick($event)">
+      
+      <ng-template #nodeTemplate let-node>
+        <svg:g class="node" [class.selected]="selectedNode === node.id">
+          <svg:rect 
+            [attr.width]="node.dimension.width" 
+            [attr.height]="node.dimension.height" 
+            [attr.fill]="node.data.color || '#1976d2'"
+            [attr.rx]="4"
+            [attr.stroke]="selectedNode === node.id ? '#ff9800' : 'none'"
+            [attr.stroke-width]="selectedNode === node.id ? 3 : 0" />
+          <svg:text 
+            alignment-baseline="central" 
+            [attr.x]="node.dimension.width / 2" 
+            [attr.y]="node.dimension.height / 2"
+            [attr.fill]="'white'"
+            text-anchor="middle"
+            font-size="12"
+            font-weight="600">
+            {{ node.label }}
+          </svg:text>
+        </svg:g>
+      </ng-template>
+
+      <ng-template #linkTemplate let-link>
+        <svg:g class="edge">
+          <svg:path 
+            class="line" 
+            stroke-width="2" 
+            [attr.stroke]="link.data?.color || '#999'"
+            marker-end="url(#arrow)" />
+          <svg:text 
+            *ngIf="link.label"
+            [attr.x]="link.points[Math.floor(link.points.length / 2)]?.x"
+            [attr.y]="link.points[Math.floor(link.points.length / 2)]?.y"
+            font-size="10"
+            fill="#666"
+            text-anchor="middle">
+            {{ link.label }}
+          </svg:text>
+        </svg:g>
+      </ng-template>
+    </ngx-graph>
+  </div>
+
+  <div class="graph-legend" *ngIf="showLegend">
+    <h4>Legend</h4>
+    <div class="legend-items">
+      <div class="legend-item" *ngFor="let node of nodes">
+        <div class="legend-color" [style.background-color]="node.data.color || '#1976d2'"></div>
+        <span>{{ node.label }}</span>
+      </div>
+    </div>
+  </div>
+</div>

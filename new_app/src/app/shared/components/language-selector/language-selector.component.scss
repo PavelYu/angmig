@@ -1,0 +1,18 @@
+.language-selector {
+  min-width: 150px;
+
+  .language-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .flag {
+      font-size: 18px;
+    }
+
+    .label {
+      flex: 1;
+    }
+  }
+}
+
