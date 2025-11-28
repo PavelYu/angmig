@@ -1,2 +1,5 @@
 node_modules
-.discussion 
+.discussion
+
+# Angular migration backups
+angular-backup-*
