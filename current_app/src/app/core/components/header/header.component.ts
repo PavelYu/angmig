@@ -101,4 +101,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/settings']);
     this.showUserMenu = false;
   }
+
+  onSearchBlur(): void {
+    setTimeout(() => this.showSearchResults = false, 200);
+  }
 }

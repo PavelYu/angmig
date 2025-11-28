@@ -43,6 +43,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 
 // Third-party
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
@@ -127,6 +128,7 @@ const THIRD_PARTY_MODULES = [
   AgGridModule,
   HighchartsChartModule,
   NgxMaterialTimepickerModule,
+  NgxGraphModule,
   PerfectScrollbarModule,
   InfiniteScrollModule,
   TranslateModule

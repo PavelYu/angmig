@@ -148,8 +148,8 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
     this.revenueData2024[randomIndex] = Math.max(50, this.revenueData2024[randomIndex] + (Math.random() * 20 - 10));
     
     if (this.chartOptions.series) {
-      const series = this.chartOptions.series[1] as Highcharts.SeriesOptionsType;
-      if (series.data) {
+      const series = this.chartOptions.series[1] as any;
+      if (series && series.data) {
         series.data = [...this.revenueData2024];
         this.updateFlag = true;
       }
