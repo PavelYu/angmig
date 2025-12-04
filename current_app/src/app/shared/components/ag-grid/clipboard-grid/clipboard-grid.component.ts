@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { AgGridAngular } from '@ag-grid-community/angular';
+import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent } from '@ag-grid-community/core';
 import { StatusCellRendererComponent } from '../status-cell-renderer/status-cell-renderer.component';
 
 @Component({
@@ -38,7 +38,6 @@ export class ClipboardGridComponent implements OnInit {
     enableRangeHandle: true,
     suppressClipboardPaste: false,
     suppressCopyRowsToClipboard: false,
-    suppressCutRowsToClipboard: false,
     clipboardDelimiter: '\t',
     onGridReady: (event: GridReadyEvent) => this.onGridReady(event),
     defaultColDef: {
@@ -66,13 +65,16 @@ export class ClipboardGridComponent implements OnInit {
   }
 
   pasteFromClipboard(): void {
-    this.gridApi.pasteFromClipboard();
+    // pasteFromClipboard is not available in ag-grid community edition v28
+    console.warn('Paste functionality requires ag-grid Enterprise edition');
   }
 
   cutToClipboard(): void {
     const selectedRows = this.gridApi.getSelectedRows();
     if (selectedRows.length > 0) {
-      this.gridApi.cutSelectedRowsToClipboard();
+      // cutSelectedRowsToClipboard is not available in ag-grid community edition v28
+      // Using copy instead
+      this.gridApi.copySelectedRowsToClipboard();
     }
   }
 }

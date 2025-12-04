@@ -88,11 +88,12 @@ export class RegionalMapComponent implements OnInit, OnDestroy {
         verticalAlign: 'middle'
       },
       series: [{
+        type: 'map',
         name: 'Revenue',
         data: Object.entries(this.regionalData).map(([code, value]) => ({
           'hc-key': code.toLowerCase(),
           value: value
-        })),
+        })) as any,
         joinBy: 'hc-key',
         states: {
           hover: {

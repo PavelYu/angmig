@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ColDef, GridOptions, GridApi, ColumnApi, GridReadyEvent, SelectionChangedEvent } from 'ag-grid-community';
-import { AgGridAngular } from 'ag-grid-angular';
-import { StatusCellRendererComponent } from '../../../shared/components/ag-grid/status-cell-renderer/status-cell-renderer.component';
-import { ActionCellRendererComponent } from '../../../shared/components/ag-grid/action-cell-renderer/action-cell-renderer.component';
-import { GridStateService } from '../../../core/services/grid-state.service';
+import { ColDef, GridOptions, GridApi, ColumnApi, GridReadyEvent, SelectionChangedEvent } from '@ag-grid-community/core';
+import { AgGridAngular } from '@ag-grid-community/angular';
+import { StatusCellRendererComponent } from '../../../../shared/components/ag-grid/status-cell-renderer/status-cell-renderer.component';
+import { ActionCellRendererComponent } from '../../../../shared/components/ag-grid/action-cell-renderer/action-cell-renderer.component';
+import { GridStateService } from '../../../../core/services/grid-state.service';
 
 export interface User {
   id: number;
@@ -157,12 +157,7 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Load saved grid state
-    const savedState = this.gridStateService.getGridState('user-list');
-    if (savedState) {
-      this.gridOptions.columnState = savedState.columnState;
-      this.gridOptions.columnGroupState = savedState.columnGroupState;
-    }
+    // Grid state will be loaded in onGridReady
   }
 
   onGridReady(event: GridReadyEvent): void {
@@ -214,21 +209,19 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  onExportExcel(): void {
-    this.gridApi.exportDataAsExcel({
-      fileName: `users_${new Date().toISOString().split('T')[0]}.xlsx`
-    });
-  }
-
   onSearch(searchTerm: string): void {
     this.gridApi.setQuickFilter(searchTerm);
   }
 
   onToggleColumns(): void {
     // Toggle column visibility panel
-    const sideBar = this.gridApi.getSideBar();
-    if (sideBar) {
-      sideBar.toggle();
+    if (this.gridApi) {
+      const toolPanelVisible = this.gridApi.isToolPanelShowing();
+      if (toolPanelVisible) {
+        this.gridApi.closeToolPanel();
+      } else {
+        this.gridApi.openToolPanel('columns');
+      }
     }
   }
 

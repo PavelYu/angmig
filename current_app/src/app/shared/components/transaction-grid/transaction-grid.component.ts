@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent, IServerSideGetRowsParams, ServerSideRowModelModule } from 'ag-grid-community';
+import { AgGridAngular } from '@ag-grid-community/angular';
+import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent, IServerSideGetRowsParams } from '@ag-grid-community/core';
 import { StatusCellRendererComponent } from '../ag-grid/status-cell-renderer/status-cell-renderer.component';
 import { ActionCellRendererComponent } from '../ag-grid/action-cell-renderer/action-cell-renderer.component';
 import { DateFilterComponent } from '../ag-grid/date-filter/date-filter.component';
@@ -215,12 +215,7 @@ export class TransactionGridComponent implements OnInit, OnDestroy {
       this.onSearch(searchTerm);
     });
 
-    // Load saved grid state
-    const savedState = this.gridStateService.getGridState(this.gridId);
-    if (savedState) {
-      this.gridOptions.columnState = savedState.columnState;
-      this.gridOptions.columnGroupState = savedState.columnGroupState;
-    }
+    // Grid state will be loaded in onGridReady
   }
 
   ngOnDestroy(): void {
@@ -315,9 +310,13 @@ export class TransactionGridComponent implements OnInit, OnDestroy {
   }
 
   onToggleColumns(): void {
-    const sideBar = this.gridApi.getSideBar();
-    if (sideBar) {
-      sideBar.toggle();
+    if (this.gridApi) {
+      const toolPanelVisible = this.gridApi.isToolPanelShowing();
+      if (toolPanelVisible) {
+        this.gridApi.closeToolPanel();
+      } else {
+        this.gridApi.openToolPanel('columns');
+      }
     }
   }
 

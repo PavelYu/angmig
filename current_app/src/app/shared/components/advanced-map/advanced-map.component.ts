@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import * as proj4 from 'proj4';
 import * as Highcharts from 'highcharts';
-import { MapModule } from 'highcharts/modules/map';
+import MapModule from 'highcharts/modules/map';
 
 export interface MapDataPoint {
   code: string;

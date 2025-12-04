@@ -8,7 +8,7 @@
     [ngxTimepicker]="picker"
     [format]="showSeconds ? 'HH:mm:ss' : 'HH:mm'"
     readonly>
-  <mat-icon matSuffix [ngxTimepickerToggle]="picker"></mat-icon>
+  <mat-icon matSuffix (click)="picker.open()">schedule</mat-icon>
   <ngx-material-timepicker #picker></ngx-material-timepicker>
 </mat-form-field>
 

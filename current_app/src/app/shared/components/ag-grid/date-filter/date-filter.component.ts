@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { IFloatingFilterAngularComp } from 'ag-grid-angular';
-import { IFloatingFilterParams, IDateFilterParams } from 'ag-grid-community';
+import { IFloatingFilterAngularComp } from '@ag-grid-community/angular';
+import { IFloatingFilterParams, IDateFilterParams } from '@ag-grid-community/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -25,11 +25,11 @@ export class DateFilterComponent implements IFloatingFilterAngularComp, OnInit, 
   ngAfterViewInit(): void {
     // Initialize with existing filter if present
     if (this.params && this.params.currentParentModel) {
-      const model = this.params.currentParentModel;
-      if (model.dateFrom) {
+      const model = this.params.currentParentModel();
+      if (model && model.dateFrom) {
         this.dateFrom.setValue(new Date(model.dateFrom));
       }
-      if (model.dateTo) {
+      if (model && model.dateTo) {
         this.dateTo.setValue(new Date(model.dateTo));
       }
     }

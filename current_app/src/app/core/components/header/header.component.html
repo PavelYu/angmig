@@ -15,7 +15,7 @@
                    [formControl]="searchControl" 
                    placeholder="Global Search..."
                    (focus)="showSearchResults = true"
-                   (blur)="setTimeout(() => showSearchResults = false, 200)">
+                   (blur)="onSearchBlur()">
         </mat-form-field>
         
         <div class="search-results" *ngIf="showSearchResults && (searchResults$ | async)?.length">
