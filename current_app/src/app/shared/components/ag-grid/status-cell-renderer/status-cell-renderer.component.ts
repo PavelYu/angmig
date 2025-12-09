@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { ICellRendererAngularComp } from 'ag-grid-angular';
-import { ICellRendererParams } from 'ag-grid-community';
+import { ICellRendererAngularComp } from '@ag-grid-community/angular';
+import { ICellRendererParams } from '@ag-grid-community/core';
 
 @Component({
   selector: 'app-status-cell-renderer',
@@ -13,7 +13,7 @@ export class StatusCellRendererComponent implements ICellRendererAngularComp {
 
   agInit(params: ICellRendererParams): void {
     this.params = params;
-    this.showIcon = params.showIcon !== false;
+    this.showIcon = (params as any).showIcon !== false;
   }
 
   refresh(params: ICellRendererParams): boolean {

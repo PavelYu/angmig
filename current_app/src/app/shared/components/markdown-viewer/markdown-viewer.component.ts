@@ -13,7 +13,7 @@ export class MarkdownViewerComponent implements OnInit, OnChanges {
   @Input() highlightCode = false;
 
   renderedHtml: SafeHtml = '';
-  private markedOptions: marked.MarkedOptions = {
+  private markedOptions = {
     breaks: true,
     gfm: true,
     headerIds: true,

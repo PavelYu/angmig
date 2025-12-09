@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ColumnState } from 'ag-grid-community';
+import { ColumnState } from '@ag-grid-community/core';
 
 export interface GridState {
   columnState: ColumnState[];

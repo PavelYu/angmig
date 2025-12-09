@@ -1,0 +1,10 @@
+{
+	"servers": {
+		"angular-migration": {
+			"type": "stdio",
+			"command": "node",
+			"args": ["/Users/siarheiskuratovich/dev/AI/ACP/Angular-Migration/packages/mcp-server/dist/index.js"]
+		}
+	},
+	"inputs": []
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent } from 'ag-grid-community';
+import { AgGridAngular } from '@ag-grid-community/angular';
+import { ColDef, GridApi, ColumnApi, GridOptions, GridReadyEvent } from '@ag-grid-community/core';
 import { StatusCellRendererComponent } from '../status-cell-renderer/status-cell-renderer.component';
 
 @Component({

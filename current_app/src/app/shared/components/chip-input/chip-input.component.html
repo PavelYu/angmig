@@ -16,8 +16,7 @@
         (blur)="onInputBlur()"
         [matChipInputFor]="chipList"
         [matChipInputSeparatorKeyCodes]="separator === ',' ? [13, 188] : [13]"
-        [matChipInputAddOnBlur]="addOnBlur"
-        [matChipInputMaxChips]="maxChips">
+        [matChipInputAddOnBlur]="addOnBlur">
     </mat-chip-list>
     
     <mat-hint *ngIf="maxChips">
